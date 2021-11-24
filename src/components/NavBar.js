@@ -11,7 +11,8 @@ const NavBar = ({token, setToken}) => {
                     <div className="navbar-nav">
                         <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                         <Link className="nav-link active" to="/routines">Routines</Link>
-                        <Link className="nav-link active" to="/profile">Profile</Link>
+                        <Link className="nav-link active" to="/activities">Activities</Link>
+                        <Link className="nav-link active" to="/profile">My Routines</Link>
                         {(!token ? <Link className="nav-link active" to="/login">Log In</Link> : 
                             <Link className="nav-link active" to="/login" onClick={(event) => {
                                 localStorage.removeItem("token");

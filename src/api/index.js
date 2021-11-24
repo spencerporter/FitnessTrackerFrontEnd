@@ -5,35 +5,35 @@ import { BASE_URL } from "../constants";
 
 
 /**
- * Post Functions
+ * Routines Functions
  */
-export async function fetchPosts() {
+export async function fetchAllRoutines(){
     try {
-        const response = await fetch(`${BASE_URL}/posts`)
+        const response = await fetch(`${BASE_URL}/routines`)
         const result = await response.json();
-        const posts = result.data.posts;
-        return posts;
+        const routines = result;
+        return routines;
     } catch (error) {
-        console.error("Error retriving Posts", error);
+        console.error("Error Retriving Routines", error);
     }
 }
 
-export async function fetchPostsWithToken(token) {
-    try{
-        const response = await fetch(`${BASE_URL}/posts`, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
+/**
+ * Activities Functions
+ */
+export async function fetchAllActivities(){
+    try {
+        const response = await fetch(`${BASE_URL}/activities`)
         const result = await response.json();
-        const posts = result.data.posts;
-        return posts;
-    }catch (error){
-        console.error("Isssue Fetching Users Posts", error)
+        const activities = result;
+        return activities;
+    } catch (error) {
+        console.error("Error Retriving Activities", error);
     }
 }
+/**
+ * Delete All Below when Replaced
+ */
 export async function getPostWithID(token, postID, setPost){
     try{
         const response = await fetch(`${BASE_URL}/posts`, {
@@ -82,21 +82,7 @@ export async function getPostWithIDForEdit(token, postID, setTitle, setDescripti
     }
 }
 
-export async function postMessage(message, postID, token){
-    fetch(`${BASE_URL}/posts/${postID}/messages`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-            message: {
-            content: message
-        }
-    })
-    }).then(response => response.json())
-    .catch(console.error);
-}
+
 
 export async function deletePostWithID (token, postID){
     try{

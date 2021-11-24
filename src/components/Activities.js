@@ -1,20 +1,19 @@
 /*
 TODOs
-* Delete Post (If User = Creator)
+* Delete Activity (If User = Creator)
 * Fix Search
 * Remove any reference to Post
-* Show Activites
 */
 
 import React, { useEffect, useState }from "react";
 import { Link , useHistory } from "react-router-dom";
-import { fetchAllRoutines } from "../api";
+import { fetchAllActivities } from "../api";
 import { Toast, ToastContainer } from "react-bootstrap";
 
-async function getRoutines(setRoutines, setDisplayRoutines){
-    const routines = await fetchAllRoutines();
-    setRoutines(routines);
-    setDisplayRoutines(routines);
+async function getActivities(setActivities, setDisplayActivities){
+    const activities = await fetchAllActivities();
+    setActivities(activities);
+    setDisplayActivities(activities);
 }
 
 // async function deletePost(postID, token, setPosts, setDisplayPosts, setShowDeleteAlert){
@@ -23,7 +22,7 @@ async function getRoutines(setRoutines, setDisplayRoutines){
 //     setShowDeleteAlert(true);
 // }
 
-function RoutineMatches(post, text) {
+function ActivityMatches(post, text) {
     // if(post.description.toLowerCase().includes(text)) return true;
     // if(post.author.username.toLowerCase().includes(text)) return true;
     // if(post.location.toLowerCase().includes(text)) return true;
@@ -34,17 +33,17 @@ function RoutineMatches(post, text) {
     return true;
 }
 
-const Routines = ({token}) => {
-    const [routines, setRoutines] = useState([]);
-    const [displayRoutines, setDisplayRoutines] = useState([]);
+const Activites = ({token}) => {
+    const [activities, setActivities] = useState([]);
+    const [displayActivities, setDisplayActivities] = useState([]);
 
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
     const history = useHistory();
 
     useEffect(() => {
-        getRoutines(setRoutines, setDisplayRoutines);
-    }, []);
+        getActivities(setActivities, setDisplayActivities);
+    }, [token]);
 
     return (
         <div id="posts" className="centered w-75">
@@ -75,16 +74,14 @@ const Routines = ({token}) => {
 
                 {(token !== "" ? <Link className="btn btn-outline-primary m-3" to="/posts/add">Add a Post</Link> : null)}
             </div>
-            {displayRoutines.map((routine, index) => {
+            {displayActivities.map((activity, index) => {
                 return (
                     <div key={index} className="card w-75 p-3 border-dark m-3 shadow bg-body rounded">
                         <div className="card-header bg-primary text-white">
-                            {routine.name}
+                            {activity.name}
                         </div>
                         <ul className="list-group list-group-flush">
-                            <li className="list-group-item">Goal: {routine.goal}</li>
-                            <li className="list-group-item">Creator: {routine.creatorName}</li>
-                            {/* TODO Show Activites */}
+                            <li className="list-group-item">Description: {activity.description}</li>
                         </ul>
                     </div>
                 )
@@ -93,4 +90,4 @@ const Routines = ({token}) => {
     )
 }
 
-export default Routines;
+export default Activites;
