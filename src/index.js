@@ -7,7 +7,7 @@ import {
     AddEditRoutines,
     Home,
     LogIn,
-    NavBar, Routines, Profile, Routine, Activities
+    NavBar, Routines, MyRoutines, Routine, Activities
 } from "./components"
 const App = () => {
     const [token, setToken] = useState("");
@@ -33,7 +33,7 @@ const App = () => {
                 <Route exact path="/posts/add" render={(routeProps) => <AddEditRoutines token={token} user={user} isAdd={true} {...routeProps}/>}  />
                 <Route path="/posts/post/:postId" render={(routeProps) => <Routine token={token} user={user} {...routeProps} />}/>
                 <Route path="/posts/post/edit/:postId" render={(routeProps) => <AddEditRoutines token={token} user={user} isAdd={false} {...routeProps}/>}  />
-                <Route path="/profile" render={(routeProps) => <Profile token={token} {...routeProps} />} />
+                <Route path="/myRoutines" render={(routeProps) => <MyRoutines token={token} {...routeProps} />} />
                 <Route path="/login" render={(routeProps) => <LogIn setToken={setToken} setUser={setUser} {...routeProps}/>}  />
                 <Route path="/register" render={(routeProps) => <LogIn setToken={setToken} setUser={setUser} {...routeProps}/>}  />
             </BrowserRouter>

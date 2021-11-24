@@ -3,7 +3,7 @@ TODOS:
 * Finish Activities - James
 * AddEditRoutines
 * AddEditActivities
-* Profile - Spencer
+* myRoutines - Spencer
     * getRoutinesByToken
 * Home? 
 * Routine (Single Routine View) - Connor

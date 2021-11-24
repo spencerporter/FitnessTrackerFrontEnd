@@ -18,6 +18,21 @@ export async function fetchAllRoutines(){
     }
 }
 
+export async function fetchRoutinesByUsername(username){
+    
+    try {
+        const response = await fetch(`${BASE_URL}/users/${username}/routines`)
+
+        console.log('response', response);
+        const result = await response.json();
+        const routines = result;
+        console.log("Routines", routines)
+        return routines;
+    } catch (error) {
+        console.error("Error Retriving Routines", error);
+    }
+}
+
 /**
  * Activities Functions
  */
@@ -125,7 +140,6 @@ export async function login(username, password){
 
 export async function register(username, password){
     try {
-        console.log(`${BASE_URL}/users/register`)
         const response = await fetch(`${BASE_URL}/users/register`, {
             method: "POST",
             headers: {
@@ -144,7 +158,6 @@ export async function register(username, password){
 }
 
 export async function getUser(token, setUser){
-    console.log("Getting User", token)
     fetch(`${BASE_URL}/users/me`, {
         headers: {
           'Content-Type': 'application/json',
@@ -153,7 +166,6 @@ export async function getUser(token, setUser){
       })
     .then(response => response.json())
     .then(result => {
-        console.log(result);
         setUser(result)
         localStorage.setItem("user", result);
     })
