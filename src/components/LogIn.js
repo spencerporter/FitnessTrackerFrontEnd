@@ -22,10 +22,11 @@ async function registerUser(username, password, confirmPassword, setToken, histo
     if(confirmPassword === password){  
         try{
             const result = await register(username, password);
+            console.log(result);
             if(result.success === false){
                 document.getElementById("errorMessage").innerHTML = result.error.message;
             }else{
-                const token = result.data.token;
+                const token = result.token;
                 setToken(token);
                 localStorage.setItem("token", token);
                 history.push("/");
@@ -49,7 +50,7 @@ const LogIn = ({setToken , match}) => {
         <form className="m-3 w-50 position-absolute top-50 start-50 translate-middle" 
             onSubmit={(event) => {
                 event.preventDefault();
- 
+                console.log(match.url)
                 if(match.url === "/register"){
                     registerUser(username, password, confirmPassword, setToken, history);
                 }else {

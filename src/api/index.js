@@ -141,16 +141,15 @@ export async function login(username, password){
 
 export async function register(username, password){
     try {
+        console.log(`${BASE_URL}/users/register`)
         const response = await fetch(`${BASE_URL}/users/register`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                user: {
                     username: username,
                     password: password
-                }
             })
         })
         const result = await response.json();
@@ -161,6 +160,7 @@ export async function register(username, password){
 }
 
 export async function getUser(token, setUser){
+    console.log("Getting User", token)
     fetch(`${BASE_URL}/users/me`, {
         headers: {
           'Content-Type': 'application/json',
@@ -169,8 +169,9 @@ export async function getUser(token, setUser){
       })
     .then(response => response.json())
     .then(result => {
-        setUser(result.data)
-        localStorage.setItem("user", result.data);
+        console.log(result);
+        setUser(result)
+        localStorage.setItem("user", result);
     })
     .catch(console.error);
 }
