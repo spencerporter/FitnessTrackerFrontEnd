@@ -10,7 +10,7 @@ const NavBar = ({token, setToken}) => {
                 <div className="collapse navbar-collapse fs-3" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <Link className="nav-link active" aria-current="page" to="/">Home</Link>
-                        <Link className="nav-link active" to="/Routines">Routines</Link>
+                        <Link className="nav-link active" to="/routines">Routines</Link>
                         <Link className="nav-link active" to="/profile">Profile</Link>
                         {(!token ? <Link className="nav-link active" to="/login">Log In</Link> : 
                             <Link className="nav-link active" to="/login" onClick={(event) => {
