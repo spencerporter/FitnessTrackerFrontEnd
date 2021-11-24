@@ -64,13 +64,13 @@ const LogIn = ({setToken , match}) => {
                     onChange={({target: {value}}) => setUsername(value)}/>
             </div>
             <div className="mb-3">
-                <label htmlFor="passwordInput" className="form-label">Password (min 5 Characters)</label>
+                <label htmlFor="passwordInput" className="form-label">Password (min 8 Characters)</label>
                 <input type="password" className="form-control" id="passwordInput" placeholder="Password..." minLength="5"
                     onChange={({target: {value}}) => setPassword(value)}/>
             </div>
             {(match.url === "/register" ? 
                 <div className="mb-3">
-                    <label htmlFor="confirmPasswordInput" className="form-label">Confirm Password (min 5 Characters)</label>
+                    <label htmlFor="confirmPasswordInput" className="form-label">Confirm Password (min 8 Characters)</label>
                     <div className="input-group has-validation">
                         <input type="password" className="form-control" id="confirmPasswordInput" placeholder="Confirm Password..." minLength="5"
                             onChange={

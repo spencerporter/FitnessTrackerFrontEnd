@@ -7,7 +7,7 @@ import {
     AddEditRoutines,
     Home,
     LogIn,
-    NavBar, Routines, Profile, Routine
+    NavBar, Routines, Profile, Routine, Activities
 } from "./components"
 const App = () => {
     const [token, setToken] = useState("");
@@ -29,6 +29,7 @@ const App = () => {
                 <NavBar token={token} setToken={setToken}/>
                 <Route exact path="/" render={() => <Home token={token} user={user} />} />
                 <Route exact path="/routines" render={() => <Routines token={token} user={user} />}/>
+                <Route exact path="/activities" render={() => <Activities token={token} user={user} />}/>
                 <Route exact path="/posts/add" render={(routeProps) => <AddEditRoutines token={token} user={user} isAdd={true} {...routeProps}/>}  />
                 <Route path="/posts/post/:postId" render={(routeProps) => <Routine token={token} user={user} {...routeProps} />}/>
                 <Route path="/posts/post/edit/:postId" render={(routeProps) => <AddEditRoutines token={token} user={user} isAdd={false} {...routeProps}/>}  />
