@@ -5,7 +5,7 @@ const Register = () => {
     return(
         <form class="m-3 w-50">
             <div class="mb-3">
-                <label for="usernameInput" class="form-label">Email address</label>
+                <label for="usernameInput" class="form-label">Username</label>
                 <input type="text" class="form-control" id="usernameInput"/>
             </div>
             <div class="mb-3">
