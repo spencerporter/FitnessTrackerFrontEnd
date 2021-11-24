@@ -38,7 +38,7 @@ function postMatches(post, text) {
     return false;
 }
 
-const Posts = ({token}) => {
+const Routines = ({token}) => {
     const [posts, setPosts] = useState([]);
     const [comments, setComments] = useState({});
     const [displayPosts, setDisplayPosts] = useState([]);
@@ -135,4 +135,4 @@ const Posts = ({token}) => {
     )
 }
 
-export default Posts;
+export default Routines;
