@@ -8,7 +8,7 @@ async function loginUser(username, password, setToken, history){
         if(result.success === false){
             document.getElementById("errorMessage").innerHTML = result.error.message;
         }else{
-            const token = result.data.token;
+            const token = result.token;
             setToken(token);
             localStorage.setItem("token", token);
             history.push("/");

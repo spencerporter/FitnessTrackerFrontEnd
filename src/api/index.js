@@ -126,10 +126,8 @@ export async function login(username, password){
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                user: {
-                    username: username,
-                    password: password
-                }
+                username: username,
+                password: password
             })
         })
         const result = await response.json();
