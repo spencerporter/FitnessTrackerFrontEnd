@@ -6,13 +6,14 @@ import { getUser } from "../api";
 
 async function getUsersRoutines(user, setRoutines, setDisplayRoutines){ 
     const routines = await fetchRoutinesByUsername(user.username);
+    console.log("Reloading Routines", routines);
     setRoutines(routines);
     setDisplayRoutines(routines);
 }
 
-async function deleteRoutine(routineId, token, setRoutines, setDisplayRoutines, setShowDeleteAlert){
+async function deleteRoutine(routineId, token, setRoutines, setDisplayRoutines, setShowDeleteAlert, user){
     await deleteRoutineWithID(token, routineId)
-    getUsersRoutines(token,setRoutines, setDisplayRoutines);
+    getUsersRoutines(user,setRoutines, setDisplayRoutines);
     setShowDeleteAlert(true);
 }
 
@@ -82,11 +83,17 @@ const MyRoutines = ({token, history}) => {
                                 <li className="list-group-item">Creator: {routine.creatorName}</li>
                                 <div className="horizGroup">
                                     <button type="button" className="btn btn-outline-danger w-25 m-3" 
-                                    onClick={() => {deleteRoutine(routine.id,token,setRoutines, setDisplayRoutines, setShowDeleteAlert)}}>Delete</button>
+                                    onClick={() => {deleteRoutine(routine.id,token,setRoutines, setDisplayRoutines, setShowDeleteAlert, user)}}>Delete</button>
                                     <button type="button" className="btn btn-outline-primary w-25 m-3"
                                     onClick={() => {history.push(`/routines/routine/${routine.id}`)}}>View Routine</button>
                                 </div>
-                                {/* TODO Show Activites */}
+                                {routine.activities.map((activity, index) => {
+                                    return (
+                                        <div key={index}>
+                                        <li className="list-group-item">{activity.name}: {activity.description} </li>
+                                        </div>
+                                    )
+                                })}
                             </ul>
                         </div>
                     )
