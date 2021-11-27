@@ -1,111 +1,114 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios"
 import { useHistory } from "react-router";
 import { BASE_URL } from "../constants";
-import { getPostWithIDForEdit } from "../api"
+import { getRoutineWithIDForEdit , getUser } from "../api"
 
-async function addPost(token, post, history){
-    fetch(`${BASE_URL}/posts`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+export const api = axios.create({
+    baseURL: `${BASE_URL}`,
+})
+
+async function addRoutine(token, routine, history){
+    const options = {
+        method: "post",
+        url: `${BASE_URL}/routines`,
+        data: {
+            name: routine.name,
+            goal: routine.goal,
+            isPublic: routine.isPublic
         },
-        body: JSON.stringify({
-            post: post
-        })
-    }).then(response => response.json())
-    .then(result => {
-        if(result.success){
-            history.push("/posts")
-        }
-    })
-    .catch(console.error);
+        };
+        if(token) {
+        options.headers = {'Authorization': `Bearer ${token}`};
+    }
+    await api(options);
+    history.push(`/routines/`)
 }
 
-async function editPost(token, post, postId, history){
-    fetch(`${BASE_URL}/posts/${postId}`, {
-        method: "PATCH",
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+async function editRoutine(token, routine, routineId, history){
+    const options = {
+        method: "patch",
+        url: `${BASE_URL}/routines/${routineId}`,
+        data: {
+            name: routine.name,
+            goal: routine.goal,
+            isPublic: routine.isPublic
         },
-        body: JSON.stringify({
-            post: post
-        })
-    }).then(response => response.json())
-    .then(result => {
-        if(result.success){
-            history.push(`/posts/post/${postId}`)
-        }
-    })
-    .catch(console.error);
+        };
+        if(token) {
+        options.headers = {'Authorization': `Bearer ${token}`};
+    }
+    await api(options);
+    history.push(`/routines/routine/${routineId}`)
 }
 
-const AddEditPost = ({token, isAdd, match}) => {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
-    const [location, setLocation] = useState("");
-    const [willDeliver, setWillDeliver] = useState(false);
+const AddEditRoutine = ({token, isAdd, match}) => {
+    const [user, setUser] = useState({});
+    const [name, setName] = useState("");
+    const [goal, setGoal] = useState("");
+    const [isPublic, setIsPublic] = useState(false);
     const history = useHistory();
+    useEffect(() => {
+        if(token){
+            getUser(token, setUser);
+        }
+    }, [token])
 
     useEffect(() => {
-        if(match.params.postId){
-            getPostWithIDForEdit(token, match.params.postId, setTitle, setDescription, setPrice, setLocation, setWillDeliver);
-        }
-        
-    },[token,match.params.postId])
+        if(match.params.routineId){
+            getRoutineWithIDForEdit(token, match.params.routineId, setName, setGoal, setIsPublic);
+        }       
+    },[token,match.params.routineId])
 
-    return (
-        <div id="addPost" className="centered m-3">
-            <h1> {(isAdd ? "Add" : "Edit")} Post</h1>
-            <form className="w-50" 
-            onSubmit={(event) => {
-                event.preventDefault();
-                const post = {
-                    title: title,
-                    description: description,
-                    price: price,
-                    location: location, 
-                    willDeliver: willDeliver
-                }
-                if(isAdd){
-                    addPost(token, post, history);
-                }else{
-                    editPost(token, post, match.params.postId, history);
-                }
-                
-            }}> 
-                <div className="mb-3">
-                    <label htmlFor="titleInput" className="form-label">Title</label>
-                    <input type="text" className="form-control" id="titleInput" placeholder="Title" value={title}
-                    onChange={({target: {value}}) => setTitle(value)} />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="descInput" className="form-label">Description</label>
-                    <input type="text" className="form-control" id="descInput" placeholder="Description" value={description}
-                    onChange={({target: {value}}) => setDescription(value)} />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="priceInput" className="form-label">Price</label>
-                    <input type="text" className="form-control" id="priceInput" placeholder="Price"  value={price}
-                    onChange={({target: {value}}) => setPrice(value)} />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="locationInput" className="form-label">Location</label>
-                    <input type="text" className="form-control" id="locationInput" placeholder="Location" value={location}
-                    onChange={({target: {value}}) => setLocation(value)} />
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="deliverCheckbox" value={willDeliver}
-                    onChange={({target: {value}}) => setWillDeliver(!willDeliver)} />
-                    <label className="form-check-label" htmlFor="deliverCheckbox">
-                        Will Deliver
-                    </label>
-                </div>
-                <button type="submit" className="btn btn-primary">{(isAdd ? "Submit" : "Save")}</button>
-            </form>
-        </div>)
+    if(user.username){
+        return (
+            <div id="addRoutine" className="centered m-3">
+                <h1> {(isAdd ? "Add" : "Edit")} Routine</h1>
+                <form className="w-50" 
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    const routine = {
+                        name: name,
+                        goal: goal,
+                        isPublic: isPublic
+                    }
+                    if(isAdd){
+                        addRoutine(token, routine, history);
+                    }else{
+                        editRoutine(token, routine, match.params.routineId, history);
+                    }
+                    
+                }}> 
+                    <div className="mb-3">
+                        <label htmlFor="nameInput" className="form-label">Title</label>
+                        <input type="text" className="form-control" id="nameInput" placeholder="Name" value={name}
+                        onChange={({target: {value}}) => setName(value)} />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="goalInput" className="form-label">Description</label>
+                        <input type="text" className="form-control" id="goalInput" placeholder="Goal" value={goal}
+                        onChange={({target: {value}}) => setGoal(value)} />
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" id="publicCheckbox" value={isPublic}
+                        onChange={({target: {value}}) => setIsPublic(!isPublic)} />
+                        <label className="form-check-label" htmlFor="publicCheckbox">
+                            isPublic
+                        </label>
+                    </div>
+                    <button type="submit" className="btn btn-primary">{(isAdd ? "Submit" : "Save")}</button>
+                </form>
+            </div>)
+    }else{
+        return (
+            <div className="centered m-3">
+                <h1>Please Login to see your Routines</h1>
+                <button type="button" className="btn btn-outline-primary" onClick={(event) =>{
+                    event.preventDefault();
+                    history.push("/login");
+                }}>Log In</button>
+            </div>);
+    }
 }
 
-export default AddEditPost;
+export default AddEditRoutine;

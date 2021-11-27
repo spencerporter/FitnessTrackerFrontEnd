@@ -1,32 +1,27 @@
 import React, {useState, useEffect} from "react";
-import { Link , useHistory } from "react-router-dom";
-import { fetchRoutinesByUsername } from "../api";
+import { Link } from "react-router-dom";
+import { deleteRoutineWithID, fetchRoutinesByUsername } from "../api";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { getUser } from "../api";
 
 async function getUsersRoutines(user, setRoutines, setDisplayRoutines){ 
-    console.log("User for My Routines", user.username);
     const routines = await fetchRoutinesByUsername(user.username);
-    console.log("routines for my User", routines);
     setRoutines(routines);
     setDisplayRoutines(routines);
 }
 
-// async function deletePost(postID, token, setPosts, setDisplayPosts, setShowDeleteAlert){
-//     await deletePostWithID(token, postID)
-//     getPosts(token,setPosts, setDisplayPosts);
-//     setShowDeleteAlert(true);
-// }
+async function deleteRoutine(routineId, token, setRoutines, setDisplayRoutines, setShowDeleteAlert){
+    await deleteRoutineWithID(token, routineId)
+    getUsersRoutines(token,setRoutines, setDisplayRoutines);
+    setShowDeleteAlert(true);
+}
 
-function RoutineMatches(post, text) {
-    // if(post.description.toLowerCase().includes(text)) return true;
-    // if(post.author.username.toLowerCase().includes(text)) return true;
-    // if(post.location.toLowerCase().includes(text)) return true;
-    // if(post.price.toLowerCase().includes(text)) return true;
-    // if(post.title.toLowerCase().includes(text)) return true;
+function RoutineMatches(routine, text) {
+    if(routine.name.toLowerCase().includes(text)) return true;
+    if(routine.creatorName.toLowerCase().includes(text)) return true;
+    if(routine.goal.toLowerCase().includes(text)) return true;
 
-    // return false;
-    return true;
+    return false;
 }
 
 const MyRoutines = ({token, history}) => {
@@ -68,15 +63,13 @@ const MyRoutines = ({token, history}) => {
                     <form className="d-flex w-75">
                         <input className="form-control me-2" type="search" placeholder="Search Routines" aria-label="Search"
                         onChange={({target : {value}}) => {
-                            // TODO FIx Search
-                            
-                            // const filteredRoutines = posts.filter(post => RoutineMatches(post, value.toLowerCase()));
-                            // const routinesToDisplay = value.length ? filteredRoutines : routines;
-                            // setDisplayRoutines(routinesToDisplay)
+                            const filteredRoutines = routines.filter(routine => RoutineMatches(routine, value.toLowerCase()));
+                            const routinesToDisplay = value.length ? filteredRoutines : routines;
+                            setDisplayRoutines(routinesToDisplay)
                         }}/>
                     </form>
 
-                    {(token !== "" ? <Link className="btn btn-outline-primary m-3" to="/posts/add">Add a Post</Link> : null)}
+                    {(token !== "" ? <Link className="btn btn-outline-primary m-3" to="/routines/add">Add a Routine</Link> : null)}
                 </div>
                 {displayRoutines.map((routine, index) => {
                     return (
@@ -87,6 +80,12 @@ const MyRoutines = ({token, history}) => {
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item">Goal: {routine.goal}</li>
                                 <li className="list-group-item">Creator: {routine.creatorName}</li>
+                                <div className="horizGroup">
+                                    <button type="button" className="btn btn-outline-danger w-25 m-3" 
+                                    onClick={() => {deleteRoutine(routine.id,token,setRoutines, setDisplayRoutines, setShowDeleteAlert)}}>Delete</button>
+                                    <button type="button" className="btn btn-outline-primary w-25 m-3"
+                                    onClick={() => {history.push(`/routines/routine/${routine.id}`)}}>View Routine</button>
+                                </div>
                                 {/* TODO Show Activites */}
                             </ul>
                         </div>

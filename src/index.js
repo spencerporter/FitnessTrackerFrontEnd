@@ -30,9 +30,9 @@ const App = () => {
                 <Route exact path="/" render={() => <Home token={token} user={user} />} />
                 <Route exact path="/routines" render={() => <Routines token={token} user={user} />}/>
                 <Route exact path="/activities" render={() => <Activities token={token} user={user} />}/>
-                <Route exact path="/posts/add" render={(routeProps) => <AddEditRoutines token={token} user={user} isAdd={true} {...routeProps}/>}  />
-                <Route path="/posts/post/:postId" render={(routeProps) => <Routine token={token} user={user} {...routeProps} />}/>
-                <Route path="/posts/post/edit/:postId" render={(routeProps) => <AddEditRoutines token={token} user={user} isAdd={false} {...routeProps}/>}  />
+                <Route exact path="/routines/add" render={(routeProps) => <AddEditRoutines token={token} user={user} isAdd={true} {...routeProps}/>}  />
+                <Route path="/routiness/routine/:routineId" render={(routeProps) => <Routine token={token} user={user} {...routeProps} />}/>
+                <Route path="/routiness/routine/edit/:routineId" render={(routeProps) => <AddEditRoutines token={token} user={user} isAdd={false} {...routeProps}/>}  />
                 <Route path="/myRoutines" render={(routeProps) => <MyRoutines token={token} {...routeProps} />} />
                 <Route path="/login" render={(routeProps) => <LogIn setToken={setToken} setUser={setUser} {...routeProps}/>}  />
                 <Route path="/register" render={(routeProps) => <LogIn setToken={setToken} setUser={setUser} {...routeProps}/>}  />
