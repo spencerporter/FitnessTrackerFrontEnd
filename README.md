@@ -1,10 +1,13 @@
 TODOS: 
 * Finish Routines - Connor
+* AddEdiRoutines
+* Display Activities of a Routine
 * Finish Activities - James
-* AddEditRoutines
-* AddEditActivities
+* AddEditActivites
 * myRoutines - Spencer
     * getRoutinesByToken
-* Home? 
+
 * Routine (Single Routine View) - Connor
-* Activity (Needed?) - If Needed James
+* AddEdiRoutines
+
+* Home? 
