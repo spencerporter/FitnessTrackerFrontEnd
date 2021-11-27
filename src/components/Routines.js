@@ -23,15 +23,13 @@ async function getRoutines(setRoutines, setDisplayRoutines){
 //     setShowDeleteAlert(true);
 // }
 
-function RoutineMatches(post, text) {
-    // if(post.description.toLowerCase().includes(text)) return true;
-    // if(post.author.username.toLowerCase().includes(text)) return true;
-    // if(post.location.toLowerCase().includes(text)) return true;
-    // if(post.price.toLowerCase().includes(text)) return true;
-    // if(post.title.toLowerCase().includes(text)) return true;
+function RoutineMatches(routine, text) {
+    if(routine.name.toLowerCase().includes(text)) return true;
+    if(post.creatorName.toLowerCase().includes(text)) return true;
+    if(post.goal.toLowerCase().includes(text)) return true;
 
-    // return false;
-    return true;
+    //return true;
+    return false;
 }
 
 const Routines = ({token}) => {
@@ -63,13 +61,13 @@ const Routines = ({token}) => {
             : null)}
             <div className="horizGroup">
                 <form className="d-flex w-75">
-                    <input className="form-control me-2" type="search" placeholder="Search Posts" aria-label="Search"
+                    <input className="form-control me-2" type="search" placeholder="Search Routines" aria-label="Search"
                     onChange={({target : {value}}) => {
                         // TODO FIx Search
                         
-                        // const filteredRoutines = posts.filter(post => RoutineMatches(post, value.toLowerCase()));
-                        // const routinesToDisplay = value.length ? filteredRoutines : routines;
-                        // setDisplayRoutines(routinesToDisplay)
+                        const filteredRoutines = routines.filter(routine => RoutineMatches(routine, value.toLowerCase()));
+                        const routinesToDisplay = value.length ? filteredRoutines : routines;
+                        setDisplayRoutines(routinesToDisplay)
                     }}/>
                 </form>
 
