@@ -38,6 +38,37 @@ export async function fetchRoutinesByUsername(username){
     }
 }
 
+export async function getRoutineWithID(token, routineId, setPost){
+    try{
+        const routines = await fetchAllRoutines();
+        for(var i = 0; i < routines.length; i++){
+            if(routines[i].id == routineId){
+                return routines[i];
+            }
+        }
+        return {};
+    }catch (error){
+        console.error("Isssue Fetching Users Routines", error)
+    }
+}
+
+export async function deleteRoutineWithID(token, routineId){
+    try{
+        
+        const response = await fetch(`${BASE_URL}/routines/${routineId}`, {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        const result = await response.json();
+        return result;
+    }catch (error){
+        console.error("Deleting User's Routine", error)
+    }
+}
+
 /**
  * Activities Functions
  */
@@ -54,27 +85,7 @@ export async function fetchAllActivities(){
 /**
  * Delete All Below when Replaced
  */
-export async function getPostWithID(token, postID, setPost){
-    try{
-        const response = await fetch(`${BASE_URL}/posts`, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        const result = await response.json();
-        const posts = result.data.posts;
 
-        posts.forEach((post) => {
-            if(post._id === postID) {
-                setPost(post);
-            }
-        })
-    }catch (error){
-        console.error("Isssue Fetching Users Posts", error)
-    }
-}
 
 export async function getPostWithIDForEdit(token, postID, setTitle, setDescription, setPrice, setLocation, setWillDeliver){
     try{
@@ -97,24 +108,6 @@ export async function getPostWithIDForEdit(token, postID, setTitle, setDescripti
                 setWillDeliver(post.willDeliver);
             }
         })
-    }catch (error){
-        console.error("Isssue Fetching Users Posts", error)
-    }
-}
-
-
-
-export async function deletePostWithID (token, postID){
-    try{
-        const response = await fetch(`${BASE_URL}/posts/${postID}`, {
-            method: "DELETE",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        const result = await response.json();
-        return result;
     }catch (error){
         console.error("Isssue Fetching Users Posts", error)
     }
