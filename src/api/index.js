@@ -38,11 +38,11 @@ export async function fetchRoutinesByUsername(username){
     }
 }
 
-export async function getRoutineWithID(token, routineId, setPost){
+export async function getRoutineWithID(token, routineId, setRoutine){
     try{
         const routines = await fetchAllRoutines();
         for(var i = 0; i < routines.length; i++){
-            if(routines[i].id == routineId){
+            if(routines[i].id === routineId){
                 return routines[i];
             }
         }
@@ -82,6 +82,7 @@ export async function fetchAllActivities(){
         console.error("Error Retriving Activities", error);
     }
 }
+
 /**
  * Delete All Below when Replaced
  */

@@ -1,9 +1,6 @@
-/*
-TODOs
-* Delete Activity (If User = Creator)
-* Fix Search
-* Remove any reference to Post
-*/
+/** 
+ * Add Activity
+ */
 
 import React, { useEffect, useState }from "react";
 import { Link , useHistory } from "react-router-dom";
@@ -16,36 +13,12 @@ async function getActivities(setActivities, setDisplayActivities){
     setDisplayActivities(activities);
 }
 
-async function deleteRoutineActivity(id, token, user, setActivities, setDisplayActivities, setShowDeleteAlert){ 
-    //get routine that routine activity belongs to, and then see if that user created that routine
-    
-    const routineActivity = await getRoutineActivity(id);
-
-    const activityToDelete = await getRoutineWithID(routineActivity.routineId);
-
-    if (user.id === activityToDelete.creatorId){
-        const updatedActivities = await deleteActivityWithID(token, activityId, routineId); 
-        getActivities(token, setActivities, setDisplayActivities); 
-        setShowDeleteAlert(true);
-        return updatedActivities
-    }
-    
-    
- }
 
 function ActivityMatches(activity, text, number) {
     if(activity.name.toLowerCase().includes(text)) return true;
     if(activity.description.toLowerCase().includes(text)) return true;
-    if(activity.id.includes(number)) return true; 
-    
 
-    // if(activity.description.toLowerCase().includes(text)) return true;
-    // if(activity.author.username.toLowerCase().includes(text)) return true;
-    // if(activity.location.toLowerCase().includes(text)) return true;
-    // if(post.title.toLowerCase().includes(text)) return true;
-
-    // return false;
-    return true;
+    return false;
 }
 
 
@@ -79,7 +52,7 @@ const Activites = ({token}) => {
             : null)}
             <div className="horizGroup">
                 <form className="d-flex w-75">
-                    <input className="form-control me-2" type="search" placeholder="Search Posts" aria-label="Search"
+                    <input className="form-control me-2" type="search" placeholder="Search Activities" aria-label="Search"
                     onChange={({target : {value}}) => {
                         // TODO FIx Search
                         
@@ -88,7 +61,7 @@ const Activites = ({token}) => {
                         setDisplayActivities(activitiesToDisplay)
                     }}/>
                 </form>
-                {(token !== "" ? <Link className="btn btn-outline-primary m-3" to="/posts/add">Add an Activity</Link> : null)}
+                {(token !== "" ? <Link className="btn btn-outline-primary m-3" to="/activities/add">Add an Activity</Link> : null)}
             </div>
             {displayActivities.map((activity, index) => {
                 return (
