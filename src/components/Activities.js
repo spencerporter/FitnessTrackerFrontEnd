@@ -21,9 +21,9 @@ async function deleteRoutineActivity(id, token, user, setActivities, setDisplayA
     
     const routineActivity = await getRoutineActivity(id);
 
-    const something = await getRoutineWithID(routineActivity.routineId);
+    const activityToDelete = await getRoutineWithID(routineActivity.routineId);
 
-    if (user.id === something.creatorId){
+    if (user.id === activityToDelete.creatorId){
         const updatedActivities = await deleteActivityWithID(token, activityId, routineId); 
         getActivities(token, setActivities, setDisplayActivities); 
         setShowDeleteAlert(true);
