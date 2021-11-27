@@ -25,8 +25,8 @@ async function deleteRoutine(routineID, token, setRoutines, setDisplayRoutines, 
 
 function RoutineMatches(routine, text) {
     if(routine.name.toLowerCase().includes(text)) return true;
-    if(post.creatorName.toLowerCase().includes(text)) return true;
-    if(post.goal.toLowerCase().includes(text)) return true;
+    if(routine.creatorName.toLowerCase().includes(text)) return true;
+    if(routine.goal.toLowerCase().includes(text)) return true;
 
     //return true;
     return false;
