@@ -8,8 +8,9 @@ TODOs
 
 import React, { useEffect, useState }from "react";
 import { Link , useHistory } from "react-router-dom";
-import { fetchAllRoutines, deleteRoutineWithID } from "../api";
+import { fetchAllRoutines, deleteRoutineWithID, getUser } from "../api";
 import { Toast, ToastContainer } from "react-bootstrap";
+
 
 async function getRoutines(setRoutines, setDisplayRoutines){
     const routines = await fetchAllRoutines();
@@ -34,16 +35,27 @@ function RoutineMatches(routine, text) {
 
 const Routines = ({token}) => {
     const [routines, setRoutines] = useState([]);
+    //const [activities, setActivities] = useState([]);
     const [displayRoutines, setDisplayRoutines] = useState([]);
+    //const [displayActivities, setDisplayActivities] = useState([]);
 
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
     const history = useHistory();
 
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        if(token){
+            getUser(token, setUser);
+        }
+    }, [token])
+    
     useEffect(() => {
         getRoutines(setRoutines, setDisplayRoutines);
     }, []);
 
+    console.log(user, displayRoutines);
     return (
         <div id="routines" className="centered w-75">
             {(showDeleteAlert ? 
@@ -72,7 +84,7 @@ const Routines = ({token}) => {
 
                 {(token !== "" ? <Link className="btn btn-outline-primary m-3" to="/routines/add">Add a Routine</Link> : null)}
             </div>
-            {displayRoutines.map((routine, index) => {
+            { displayRoutines.map((routine, index) => {
                 return (
                     <div key={index} className="card w-75 p-3 border-dark m-3 shadow bg-body rounded">
                         <div className="card-header bg-primary text-white">
@@ -81,7 +93,24 @@ const Routines = ({token}) => {
                         <ul className="list-group list-group-flush">
                             <li className="list-group-item">Goal: {routine.goal}</li>
                             <li className="list-group-item">Creator: {routine.creatorName}</li>
-                            {/* TODO Show Activites */}
+                            {routine.activities.map((activity, index) => {
+                                return (
+                                    <div key={index}>
+                                    <li className="list-group-item">{activity.name}: {activity.description} </li>
+                                    </div>
+                                )
+                            })}
+                            { <button type="button" className="btn btn-outline-primary w-25 m-3"
+                                    onClick={() => {history.push(`/routines/routine/${routine._id}`)}}>View Routine</button>}
+                            { user.username && (user.username === routine.creatorName) ?
+                                    <div className="horizGroup">
+                                    <button type="button" className="btn btn-outline-danger w-25 m-3" onClick={() => {
+                                        deleteRoutine(routine.id, token, setRoutines, setDisplayRoutines, setShowDeleteAlert)
+                                        console.log("woo")
+                                    }}>Delete</button>
+                                    </div> :
+                                    null
+                            }
                         </ul>
                     </div>
                 )
