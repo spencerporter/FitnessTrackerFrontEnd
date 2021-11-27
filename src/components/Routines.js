@@ -45,16 +45,16 @@ const Routines = ({token}) => {
     }, []);
 
     return (
-        <div id="posts" className="centered w-75">
+        <div id="routines" className="centered w-75">
             {(showDeleteAlert ? 
                 <ToastContainer className="pos-fix p-3" position="top-end">
                     <Toast className="d-inline-block m-1" onClose={() => setShowDeleteAlert(false)}>
                         <Toast.Header>
                             <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-                            <strong className="me-auto">Post Deleted</strong>
+                            <strong className="me-auto">Routine Deleted</strong>
                         </Toast.Header>
                         <Toast.Body >
-                            Your Post has been deleted!
+                            Your Routine has been deleted!
                         </Toast.Body>
                     </Toast>
                 </ToastContainer>
@@ -70,7 +70,7 @@ const Routines = ({token}) => {
                     }}/>
                 </form>
 
-                {(token !== "" ? <Link className="btn btn-outline-primary m-3" to="/posts/add">Add a Post</Link> : null)}
+                {(token !== "" ? <Link className="btn btn-outline-primary m-3" to="/routines/add">Add a Routine</Link> : null)}
             </div>
             {displayRoutines.map((routine, index) => {
                 return (
