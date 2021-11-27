@@ -8,38 +8,47 @@ export const api = axios.create({
     baseURL: `${BASE_URL}`,
 })
 
-async function addRoutine(token, routine, history){
-    const options = {
-        method: "post",
-        url: `${BASE_URL}/routines`,
-        data: {
-            name: routine.name,
-            goal: routine.goal,
-            isPublic: routine.isPublic
-        },
+async function addRoutine(token, routine, history, setErrorDialog){
+    try{ 
+        const options = {
+            method: "post",
+            url: `${BASE_URL}/routines`,
+            data: {
+                name: routine.name,
+                goal: routine.goal,
+                isPublic: routine.isPublic
+            },
         };
         if(token) {
-        options.headers = {'Authorization': `Bearer ${token}`};
+            options.headers = {'Authorization': `Bearer ${token}`};
+        }
+
+        await api(options);
+        history.push(`/routines/`)
+    }catch(error){
+        setErrorDialog("A Routine with that Name Already Exists")
     }
-    await api(options);
-    history.push(`/routines/`)
 }
 
-async function editRoutine(token, routine, routineId, history){
-    const options = {
-        method: "patch",
-        url: `${BASE_URL}/routines/${routineId}`,
-        data: {
-            name: routine.name,
-            goal: routine.goal,
-            isPublic: routine.isPublic
-        },
+async function editRoutine(token, routine, routineId, history, setErrorDialog){
+    try {
+        const options = {
+            method: "patch",
+            url: `${BASE_URL}/routines/${routineId}`,
+            data: {
+                name: routine.name,
+                goal: routine.goal,
+                isPublic: routine.isPublic
+            },
         };
         if(token) {
-        options.headers = {'Authorization': `Bearer ${token}`};
+            options.headers = {'Authorization': `Bearer ${token}`};
+        }
+        await api(options);
+        history.push(`/routines/routine/${routineId}`)
+    }catch(error){
+        setErrorDialog("Could not update your Routine")
     }
-    await api(options);
-    history.push(`/routines/routine/${routineId}`)
 }
 
 const AddEditRoutine = ({token, isAdd, match}) => {
@@ -47,6 +56,8 @@ const AddEditRoutine = ({token, isAdd, match}) => {
     const [name, setName] = useState("");
     const [goal, setGoal] = useState("");
     const [isPublic, setIsPublic] = useState(false);
+    const [errorDialog, setErrorDialog] = useState("");
+
     const history = useHistory();
     useEffect(() => {
         if(token){
@@ -73,12 +84,15 @@ const AddEditRoutine = ({token, isAdd, match}) => {
                         isPublic: isPublic
                     }
                     if(isAdd){
-                        addRoutine(token, routine, history);
+                        addRoutine(token, routine, history, setErrorDialog);
                     }else{
-                        editRoutine(token, routine, match.params.routineId, history);
+                        editRoutine(token, routine, match.params.routineId, history, setErrorDialog);
                     }
                     
                 }}> 
+                    <div className="mb-3">
+                        {errorDialog}
+                    </div>
                     <div className="mb-3">
                         <label htmlFor="nameInput" className="form-label">Title</label>
                         <input type="text" className="form-control" id="nameInput" placeholder="Name" value={name}
