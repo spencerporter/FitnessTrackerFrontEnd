@@ -22,7 +22,6 @@ function ActivityMatches(activity, text, number) {
 }
 
 
-
 const Activites = ({token}) => {
     const [activities, setActivities] = useState([]);
     const [displayActivities, setDisplayActivities] = useState([]);
