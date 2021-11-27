@@ -7,7 +7,7 @@ TODOs
 
 import React, { useEffect, useState }from "react";
 import { Link , useHistory } from "react-router-dom";
-import { fetchAllActivities } from "../api";
+import { fetchAllActivities, getRoutineWithID } from "../api";
 import { Toast, ToastContainer } from "react-bootstrap";
 
 async function getActivities(setActivities, setDisplayActivities){
@@ -16,22 +16,39 @@ async function getActivities(setActivities, setDisplayActivities){
     setDisplayActivities(activities);
 }
 
-// async function deletePost(postID, token, setPosts, setDisplayPosts, setShowDeleteAlert){
-//     await deletePostWithID(token, postID)
-//     getPosts(token,setPosts, setDisplayPosts);
-//     setShowDeleteAlert(true);
-// }
+async function deleteRoutineActivity(id, token, user, setActivities, setDisplayActivities, setShowDeleteAlert){ 
+    //get routine that routine activity belongs to, and then see if that user created that routine
+    
+    const routineActivity = await getRoutineActivity(id);
 
-function ActivityMatches(post, text) {
-    // if(post.description.toLowerCase().includes(text)) return true;
-    // if(post.author.username.toLowerCase().includes(text)) return true;
-    // if(post.location.toLowerCase().includes(text)) return true;
-    // if(post.price.toLowerCase().includes(text)) return true;
+    const activityToDelete = await getRoutineWithID(routineActivity.routineId);
+
+    if (user.id === activityToDelete.creatorId){
+        const updatedActivities = await deleteActivityWithID(token, activityId, routineId); 
+        getActivities(token, setActivities, setDisplayActivities); 
+        setShowDeleteAlert(true);
+        return updatedActivities
+    }
+    
+    
+ }
+
+function ActivityMatches(activity, text, number) {
+    if(activity.name.toLowerCase().includes(text)) return true;
+    if(activity.description.toLowerCase().includes(text)) return true;
+    if(activity.id.includes(number)) return true; 
+    
+
+    // if(activity.description.toLowerCase().includes(text)) return true;
+    // if(activity.author.username.toLowerCase().includes(text)) return true;
+    // if(activity.location.toLowerCase().includes(text)) return true;
     // if(post.title.toLowerCase().includes(text)) return true;
 
     // return false;
     return true;
 }
+
+
 
 const Activites = ({token}) => {
     const [activities, setActivities] = useState([]);
@@ -46,16 +63,16 @@ const Activites = ({token}) => {
     }, [token]);
 
     return (
-        <div id="posts" className="centered w-75">
+        <div id="activities" className="centered w-75">
             {(showDeleteAlert ? 
                 <ToastContainer className="pos-fix p-3" position="top-end">
                     <Toast className="d-inline-block m-1" onClose={() => setShowDeleteAlert(false)}>
                         <Toast.Header>
                             <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-                            <strong className="me-auto">Post Deleted</strong>
+                            <strong className="me-auto">Activity Deleted</strong>
                         </Toast.Header>
                         <Toast.Body >
-                            Your Post has been deleted!
+                            Your Activity has been deleted!
                         </Toast.Body>
                     </Toast>
                 </ToastContainer>
@@ -66,13 +83,12 @@ const Activites = ({token}) => {
                     onChange={({target : {value}}) => {
                         // TODO FIx Search
                         
-                        // const filteredRoutines = posts.filter(post => RoutineMatches(post, value.toLowerCase()));
-                        // const routinesToDisplay = value.length ? filteredRoutines : routines;
-                        // setDisplayRoutines(routinesToDisplay)
+                        const filteredActivities = activities.filter(activity => ActivityMatches(activity, value.toLowerCase()));
+                        const activitiesToDisplay = value.length ? filteredActivities : activities;
+                        setDisplayActivities(activitiesToDisplay)
                     }}/>
                 </form>
-
-                {(token !== "" ? <Link className="btn btn-outline-primary m-3" to="/posts/add">Add a Post</Link> : null)}
+                {(token !== "" ? <Link className="btn btn-outline-primary m-3" to="/posts/add">Add an Activity</Link> : null)}
             </div>
             {displayActivities.map((activity, index) => {
                 return (
