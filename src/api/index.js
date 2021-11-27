@@ -22,12 +22,17 @@ export async function fetchRoutinesByUsername(username){
     
     try {
         const response = await fetch(`${BASE_URL}/users/${username}/routines`)
-
-        console.log('response', response);
-        const result = await response.json();
-        const routines = result;
-        console.log("Routines", routines)
-        return routines;
+        var result = null;
+        try{
+            result = await response.json();        
+        }catch(error){
+            console.log("No Routines Found")
+        }
+        if(result){
+            return result;
+        }else{
+            return [];
+        }
     } catch (error) {
         console.error("Error Retriving Routines", error);
     }
