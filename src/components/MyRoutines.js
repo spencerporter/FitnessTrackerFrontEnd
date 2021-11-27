@@ -49,24 +49,24 @@ const MyRoutines = ({token, history}) => {
 
     if(user.username){
         return (
-            <div id="posts" className="centered w-75">
+            <div id="routines" className="centered w-75">
                 <h1> Welcome: {user.username} </h1> 
                 {(showDeleteAlert ? 
                     <ToastContainer className="pos-fix p-3" position="top-end">
                         <Toast className="d-inline-block m-1" onClose={() => setShowDeleteAlert(false)}>
                             <Toast.Header>
                                 <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-                                <strong className="me-auto">Post Deleted</strong>
+                                <strong className="me-auto">Routine Deleted</strong>
                             </Toast.Header>
                             <Toast.Body >
-                                Your Post has been deleted!
+                                Your Routine has been deleted!
                             </Toast.Body>
                         </Toast>
                     </ToastContainer>
                 : null)}
                 <div className="horizGroup">
                     <form className="d-flex w-75">
-                        <input className="form-control me-2" type="search" placeholder="Search Posts" aria-label="Search"
+                        <input className="form-control me-2" type="search" placeholder="Search Routines" aria-label="Search"
                         onChange={({target : {value}}) => {
                             // TODO FIx Search
                             
