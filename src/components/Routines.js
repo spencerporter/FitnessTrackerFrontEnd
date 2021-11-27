@@ -8,7 +8,7 @@ TODOs
 
 import React, { useEffect, useState }from "react";
 import { Link , useHistory } from "react-router-dom";
-import { fetchAllRoutines } from "../api";
+import { fetchAllRoutines, deleteRoutineWithID } from "../api";
 import { Toast, ToastContainer } from "react-bootstrap";
 
 async function getRoutines(setRoutines, setDisplayRoutines){
@@ -17,11 +17,11 @@ async function getRoutines(setRoutines, setDisplayRoutines){
     setDisplayRoutines(routines);
 }
 
-// async function deletePost(postID, token, setPosts, setDisplayPosts, setShowDeleteAlert){
-//     await deletePostWithID(token, postID)
-//     getPosts(token,setPosts, setDisplayPosts);
-//     setShowDeleteAlert(true);
-// }
+async function deleteRoutine(routineID, token, setRoutines, setDisplayRoutines, setShowDeleteAlert){
+    await deleteRoutineWithID(token, routineID)
+    getRoutines(token, setRoutines, setDisplayRoutines);
+    setShowDeleteAlert(true);
+}
 
 function RoutineMatches(routine, text) {
     if(routine.name.toLowerCase().includes(text)) return true;
@@ -63,7 +63,6 @@ const Routines = ({token}) => {
                 <form className="d-flex w-75">
                     <input className="form-control me-2" type="search" placeholder="Search Routines" aria-label="Search"
                     onChange={({target : {value}}) => {
-                        // TODO FIx Search
                         
                         const filteredRoutines = routines.filter(routine => RoutineMatches(routine, value.toLowerCase()));
                         const routinesToDisplay = value.length ? filteredRoutines : routines;
