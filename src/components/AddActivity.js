@@ -12,11 +12,11 @@ import { BASE_URL } from "../constants";
 //call the api object with the ioptions object as paramater
 
 
-export const api = axios.create({
+export const api = axios.create({ 
     baseURL: `${BASE_URL}`,
 })
 
-export default function AddActivity(token, activity, history){
+async function AddActivity(token, activity, /*history*/){
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const history = useHistory();
@@ -40,7 +40,7 @@ export default function AddActivity(token, activity, history){
 return (
     <div id="addRoutine" className="centered m-3">
         <h2>New Activity</h2>
-        <form onSubmit={async (event) => {
+        <form className="w-50" onSubmit={async (event) => {
             event.preventDefault();
             /*const activity = {
                 name: name,
@@ -76,3 +76,4 @@ return (
 
 )}
 
+export default AddActivity

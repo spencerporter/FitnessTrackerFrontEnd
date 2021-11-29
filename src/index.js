@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter , Route } from 'react-router-dom';
 import { getUser } from './api';
 
-import AddActivity from './components/AddActivity';
+
 
 import {
     AddEditRoutines,
+    AddActivity,
     Home,
     LogIn,
     NavBar, Routines, MyRoutines, Routine, Activities
