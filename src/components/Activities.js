@@ -14,7 +14,7 @@ async function getActivities(setActivities, setDisplayActivities){
 }
 
 
-function ActivityMatches(activity, text, number) {
+function ActivityMatches(activity, text) {
     if(activity.name.toLowerCase().includes(text)) return true;
     if(activity.description.toLowerCase().includes(text)) return true;
 
@@ -53,8 +53,6 @@ const Activites = ({token}) => {
                 <form className="d-flex w-75">
                     <input className="form-control me-2" type="search" placeholder="Search Activities" aria-label="Search"
                     onChange={({target : {value}}) => {
-                        // TODO FIx Search
-                        
                         const filteredActivities = activities.filter(activity => ActivityMatches(activity, value.toLowerCase()));
                         const activitiesToDisplay = value.length ? filteredActivities : activities;
                         setDisplayActivities(activitiesToDisplay)

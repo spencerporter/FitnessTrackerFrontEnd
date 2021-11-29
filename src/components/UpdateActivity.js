@@ -1,27 +1,36 @@
 import React, { useState } from "react";
+import axios from "axios"
+import { useHistory } from "react-router";
+import { BASE_URL } from "../constants";
 
-export default function UpdateActivity ({activities, getActivities, avitivityId, token}) {   //headers
+export const api = axios.create({
+    baseURL: `${BASE_URL}`,
+})
+
+export default function UpdateActivity ({activities, getActivities, activityId, token}) {   //headers
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+
+    const options = {
+        method: "patch",
+        url: `${BASE_URL}/routines/${routineId}`,
+        data: {
+            name: routine.name,
+            goal: routine.goal,
+            isPublic: routine.isPublic
+        },
+        };
+        if(token) {
+        options.headers = {'Authorization': `Bearer ${token}`};
+    }
+    await api(options);
+    history.push(`/routines/routine/${routineId}`)
 
 
     const handleSubmit = async (event) => {
         event.preventDefault();
      
-        const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/activities/9', {
-            method: "PATCH",
-            headers: {'Authorization': `Bearer ${token}`},
-            body: JSON.stringify({
-              name: name,
-              description: description,
-              header: header
-            })
-          }).then(response => response.json())
-            .then(result => {
-              console.log(result);
-            })
-            .catch(console.error);
-            
+        
             const data = await response.json();
             console.log('data: ', data);
             if(data && data.title) {

@@ -1,57 +1,78 @@
 import React, { useState } from "react";
+import axios from "axios"
+import { useHistory } from "react-router";
 
-import Activities, {getActivities} from "./Activities";
+import { BASE_URL } from "../constants";
 
-export default function AddActivity ({token, getActivities, activities}){ 
+
+
+//import axios
+//create the api object
+//create the options object
+//call the api object with the ioptions object as paramater
+
+
+export const api = axios.create({
+    baseURL: `${BASE_URL}`,
+})
+
+export default function AddActivity(token, activity, history){
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const history = useHistory();
     
-    return (
-        <div>
-            <h4>Create a new Activity</h4>
-            <form onSubmit={async (event) => {
-                event.preventDefault();
+    const options = {
+        method: "post",
+        url: `${BASE_URL}/activities`,
+        data: {
+            name: activity.name,
+            goal: activity.description,
+            //isPublic: routine.isPublic 
+        },
+        };
+        if(token) {
+        options.headers = {'Authorization': `Bearer ${token}`};
+    }
+    await api(options);
+    history.push(`/activities/`)
 
-                fetch('http://fitnesstrac-kr.herokuapp.com/api/activities', {
-                    method: "POST",
-                    headers: {'Authorization': `Bearer ${token}`},
-                    body: JSON.stringify({
-                        name: name,
-                        description: description
-                    })
-                }).then(response => response.json())
-                .then(result => {
-                console.log(result);
-                getActivities(
-                    [...activities, result.data.activity]
-                )
-                })
-                .catch(console.error);
-             }}> 
-        
-        <input
-            type="text"
-            placeholder="Name"
-            onChange={(event) => {
-                console.log(name);
-                setName(event.target.value);
-            }} 
-            value = {name} 
-            />
-        
-        <input
-            type="text"
-            placeholder="Description"
-            onChange={(event) => {
-                console.log(description);
-                setDescription(event.target.value);
-            }} 
-            value = {description} 
-            />
 
-        <button type="submit" >Submit</button>       
-        </form>
-    </div>
+return (
+    <div id="addRoutine" className="centered m-3">
+        <h2>New Activity</h2>
+        <form onSubmit={async (event) => {
+            event.preventDefault();
+            /*const activity = {
+                name: name,
+                goal: goal
+           
+            }*/
+            addActivity(token, activity, history);
+         }}> 
+    
+    <input
+        type="text"
+        placeholder="Name"
+        onChange={(event) => {
+            console.log(name);
+            setName(event.target.value);
+        }} 
+        value = {name} 
+        />
+    
+    <input
+        type="text"
+        placeholder="Description"
+        onChange={(event) => {
+            console.log(description);
+            setDescription(event.target.value);
+        }} 
+        value = {description} 
+        />
 
-)
-}
+    <button type="submit" >Submit</button>       
+    </form>
+</div>
+
+)}
+
