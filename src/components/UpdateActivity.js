@@ -7,7 +7,7 @@ export const api = axios.create({
     baseURL: `${BASE_URL}`,
 })
 
-export default function UpdateActivity ({activities, getActivities, activityId, token}) {   //headers
+export default function UpdateActivity ({activities, getActivities, activityId, token}) {  
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
 
@@ -15,9 +15,9 @@ export default function UpdateActivity ({activities, getActivities, activityId, 
         method: "patch",
         url: `${BASE_URL}/routines/${routineId}`,
         data: {
-            name: routine.name,
-            goal: routine.goal,
-            isPublic: routine.isPublic
+            name: activity.name,
+            description: activity.description,
+           
         },
         };
         if(token) {
