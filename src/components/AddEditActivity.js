@@ -38,7 +38,7 @@ async function editActivity(token, activity, activityId, history){
         options.headers = {'Authorization': `Bearer ${token}`};
     }
     await api(options);
-    history.push(`/activities/activity/${activityId}`)
+    history.push(`/activities/`)
 }
 
 const AddEditActivity = ({token, isAdd, match, activity}) => {  //what is isAdd?
@@ -55,7 +55,7 @@ const AddEditActivity = ({token, isAdd, match, activity}) => {  //what is isAdd?
 
     useEffect(() => {
         if(match.params.activityId){
-            getActivityWithIDForEdit(token, match.params.ActivityId, setName, setDescription);
+            getActivityWithIDForEdit(token, match.params.activityId, setName, setDescription);
         }       
     },[token,match.params.activityId])
 

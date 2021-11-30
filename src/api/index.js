@@ -171,9 +171,9 @@ export async function getActivityWithID(activityId, ){
     }
 }
 
-export async function getActivityWithIDForEdit(token, activity, activityId, setName, setDescription){
+export async function getActivityWithIDForEdit(token, activityId, setName, setDescription){
     try{
-        const routine = await getActivityWithID(activityId)
+        const activity = await getActivityWithID(activityId)
         if(activity){
             setName(activity.name);
             setDescription(activity.description);

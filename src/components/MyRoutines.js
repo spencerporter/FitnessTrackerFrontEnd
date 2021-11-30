@@ -6,7 +6,6 @@ import { getUser } from "../api";
 
 async function getUsersRoutines(user, setRoutines, setDisplayRoutines){ 
     const routines = await fetchRoutinesByUsername(user.username);
-    console.log("Reloading Routines", routines);
     setRoutines(routines);
     setDisplayRoutines(routines);
 }

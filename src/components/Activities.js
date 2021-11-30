@@ -3,12 +3,9 @@
  */
 
 import React, { useEffect, useState }from "react";
-import { Link , useHistory } from "react-router-dom";
-import { fetchAllActivities, getRoutineWithID } from "../api";
+import { Link } from "react-router-dom";
+import { fetchAllActivities } from "../api";
 import { Toast, ToastContainer } from "react-bootstrap";
-import { getActivityWithIDForEdit } from "../api";
-import AddEditActivity from "./AddEditActivity";
-
 
 async function getActivities(setActivities, setDisplayActivities){
     const activities = await fetchAllActivities();
@@ -25,12 +22,10 @@ function ActivityMatches(activity, text) {
 }
 
 
-const Activites = ({token}) => {
+const Activites = ({token, history}) => {
     const [activities, setActivities] = useState([]);
     const [displayActivities, setDisplayActivities] = useState([]);
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
-
-    const history = useHistory();
 
     useEffect(() => {
         getActivities(setActivities, setDisplayActivities);
@@ -74,15 +69,8 @@ const Activites = ({token}) => {
                         <button
                         type="button"
                         className="btn btn-outline-primary"
-                        onClick={(token, activity, activityId, history) => {
-                          
-                           const selectedActivity = getActivityWithIDForEdit(activities, activityId)
-                           AddEditActivity(selectedActivity)
-                           history.push("/activities/" + activity.id) 
-
-
-                            /*const selectedActivity = findPost(post._id, posts)
-                            history.push("/activities/" + activity.id) */
+                        onClick={() => {
+                            history.push(`/activities/edit/${activity.id}`) 
                         }}                                 
                         >Edit Activity
                         </button>

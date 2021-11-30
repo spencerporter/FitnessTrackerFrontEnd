@@ -1,5 +1,3 @@
-import { Form } from "react-bootstrap";
-
 export {default as NavBar} from "./NavBar"; 
 export {default as Routines} from "./Routines";
 export {default as Activities} from "./Activities";
