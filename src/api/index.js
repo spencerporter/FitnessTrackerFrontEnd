@@ -95,7 +95,7 @@ export async function fetchAllActivities(){
     }
 }
 
-export async function getActivityWithID(activityId){
+export async function getActivityWithID(activityId, ){
     try{
         const activities = await fetchAllActivities();
         for(var i = 0; i < activities.length; i++){
@@ -109,7 +109,7 @@ export async function getActivityWithID(activityId){
     }
 }
 
-export async function getActivityWithIDForEdit(token, activityId, setName, setDescription){
+export async function getActivityWithIDForEdit(token, activity, activityId, setName, setDescription){
     try{
         const routine = await getActivityWithID(activityId)
         if(activity){
