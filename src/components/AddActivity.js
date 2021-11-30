@@ -5,7 +5,6 @@ import { useHistory } from "react-router";
 import { BASE_URL } from "../constants";
 
 
-
 //import axios
 //create the api object
 //create the options object
@@ -26,8 +25,7 @@ async function AddActivity(token, activity, /*history*/){
         url: `${BASE_URL}/activities`,
         data: {
             name: activity.name,
-            goal: activity.description,
-            //isPublic: routine.isPublic 
+            goal: activity.description
         },
         };
         if(token) {
@@ -47,7 +45,7 @@ return (
                 goal: goal
            
             }*/
-            addActivity(token, activity, history);
+            //AddActivity(token, activity, history);
          }}> 
     
     <input
@@ -72,7 +70,7 @@ return (
 
     <button type="submit" >Submit</button>       
     </form>
-</div>
+</div> 
 
 )}
 

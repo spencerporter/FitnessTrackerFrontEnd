@@ -6,3 +6,4 @@ export {default as MyRoutines} from "./MyRoutines";
 export {default as LogIn} from "./LogIn";
 export {default as AddEditRoutines} from "./AddEditRoutines";
 export {default as Routine} from "./Routine.js";
+export {default as AddActivity} from "./AddActivity";
