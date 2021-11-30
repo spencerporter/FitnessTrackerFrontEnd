@@ -10,6 +10,7 @@ export const api = axios.create({
 async function UpdateActivity ({activities, getActivities, activityId, token}) {  
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const history = useHistory();
 
     const options = {
         method: "patch",
