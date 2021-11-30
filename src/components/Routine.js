@@ -15,10 +15,11 @@ async function getAllActivities(setActivities){
     }
 }
 
-const Routine = ({token, history, match}) => {
+const Routine = ({token, history, match, user}) => {
     const routineId = match.params.routineId;
     const [routine, setRoutine] = useState({})
     const [activities, setActivities] = useState({})
+    var isCreator = false;
     useEffect(() => {
         getAllActivities(setActivities);
     }, []);
@@ -28,6 +29,10 @@ const Routine = ({token, history, match}) => {
             getRoutineWithIDForSingleView(routineId, setRoutine);
         }
     },[routineId])
+    if(user){
+        isCreator = (user.username === routine.creatorName)
+    }
+    console.log("Loaded with User", user, isCreator)
 
     if(routine.id){
         return (
@@ -40,19 +45,31 @@ const Routine = ({token, history, match}) => {
                         <li className="list-group-item">Goal: {routine.goal}</li>
                         <li className="list-group-item">Creator: {routine.creatorName}</li>
                         <div className="horizGroup">
-                            <button type="button" className="btn btn-outline-primary w-25 m-3" 
-                                onClick={() => {
-                                    history.push(`/routines/routine/edit/${routine._id}`);
-                                }}>Edit Routine</button>
-                            <button type="button" className="btn btn-outline-danger w-25 m-3" onClick={() => {deleteRoutine(routine.id,token, history)}}>Delete</button>
+                            { isCreator?
+                                <button type="button" className="btn btn-outline-primary w-25 m-3" 
+                                    onClick={() => {
+                                        history.push(`/routines/edit/${routine.id}`);
+                                    }}>Edit Routine</button>
+                                :
+                                null  
+                            }
+                            { isCreator?
+                                <button type="button" className="btn btn-outline-danger w-25 m-3" onClick={() => {deleteRoutine(routine.id,token, history)}}>Delete</button>
+                                :
+                                null  
+                            }
                             {routine.activities.map((activity, index) => {
                                 return (
                                     <div key={index}>
                                         <li className="list-group-item">{activity.name}: {activity.description} </li>
                                         <li className="list-group-item">Duration: {activity.duration} </li>
                                         <li className="list-group-item">Count: {activity.count} </li>
-                                        <button type="button" className="btn btn-outline-danger w-25 m-3" onClick={() => 
-                                            {deleteActivityFromRoutine(token, activity.routineActivityId)}}>Remove Activity</button>
+                                        { isCreator?
+                                            <button type="button" className="btn btn-outline-danger w-25 m-3" onClick={() => 
+                                                {deleteActivityFromRoutine(token, activity.routineActivityId)}}>Remove Activity</button>
+                                            :
+                                          null  
+                                        }
                                     </div>
                                 )
                             })}

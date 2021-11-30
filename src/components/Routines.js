@@ -52,7 +52,6 @@ const Routines = ({token}) => {
         getRoutines(setRoutines, setDisplayRoutines);
     }, []);
 
-    console.log(user, displayRoutines);
     return (
         <div id="routines" className="centered w-75">
             {(showDeleteAlert ? 
