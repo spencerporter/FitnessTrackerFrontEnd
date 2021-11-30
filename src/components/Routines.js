@@ -29,15 +29,12 @@ function RoutineMatches(routine, text) {
     if(routine.creatorName.toLowerCase().includes(text)) return true;
     if(routine.goal.toLowerCase().includes(text)) return true;
 
-    //return true;
     return false;
 }
 
 const Routines = ({token}) => {
     const [routines, setRoutines] = useState([]);
-    //const [activities, setActivities] = useState([]);
     const [displayRoutines, setDisplayRoutines] = useState([]);
-    //const [displayActivities, setDisplayActivities] = useState([]);
 
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
@@ -97,11 +94,13 @@ const Routines = ({token}) => {
                                 return (
                                     <div key={index}>
                                     <li className="list-group-item">{activity.name}: {activity.description} </li>
+                                    <li className="list-group-item">Duration: {activity.duration} </li>
+                                    <li className="list-group-item">Count: {activity.count} </li>
                                     </div>
                                 )
                             })}
                             { <button type="button" className="btn btn-outline-primary w-25 m-3"
-                                    onClick={() => {history.push(`/routines/routine/${routine._id}`)}}>View Routine</button>}
+                                    onClick={() => {history.push(`/routines/routine/${routine.id}`)}}>View Routine</button>}
                             { user.username && (user.username === routine.creatorName) ?
                                     <div className="horizGroup">
                                     <button type="button" className="btn btn-outline-danger w-25 m-3" onClick={() => {
