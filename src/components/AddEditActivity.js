@@ -57,16 +57,16 @@ const AddEditActivity = ({token, isAdd, match, activity}) => {  //what is isAdd?
         if(match.params.activityId){
             getActivityWithIDForEdit(token, match.params.ActivityId, setName, setDescription);
         }       
-    },[token,match.params.routineId])
+    },[token,match.params.activityId])
 
     if(user.username){
         return (
             <div id="addActivity" className="centered m-3">
-                <h1> {(isAdd ? "Add" : "Edit")} Routine</h1>
+                <h1> {(isAdd ? "Add" : "Edit")} Activity</h1>
                 <form className="w-50" 
                 onSubmit={(event) => {
                     event.preventDefault();
-                    const routine = {
+                    const activity = {
                         name: name,
                         description: description
                        
