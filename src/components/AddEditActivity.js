@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios"
 import { useHistory } from "react-router";
 import { BASE_URL } from "../constants";
-import { getActivityWithIDForEdit } from "../api"
+import { getActivityWithIDForEdit, getUser } from "../api"
 
 export const api = axios.create({
     baseURL: `${BASE_URL}`,
@@ -41,7 +41,8 @@ async function editActivity(token, activity, activityId, history){
     history.push(`/activities/activity/${activityId}`)
 }
 
-const AddEditActivity = ({token, isAdd, match}) => {  //what is isAdd?
+const AddEditActivity = ({token, isAdd, match, activity}) => {  //what is isAdd?
+    const [user, setUser] = useState({});
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const history = useHistory();
@@ -84,7 +85,7 @@ const AddEditActivity = ({token, isAdd, match}) => {  //what is isAdd?
                     </div>
                     <div className="mb-3">
                         <label htmlFor="goalInput" className="form-label">Description</label>
-                        <input type="text" className="form-control" id="goalInput" placeholder="Description" value={goal}
+                        <input type="text" className="form-control" id="goalInput" placeholder="Description" value={description}
                         onChange={({target: {value}}) => setDescription(value)} />
                     </div>
                     <button type="submit" className="btn btn-primary">{(isAdd ? "Submit" : "Save")}</button>
