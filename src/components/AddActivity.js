@@ -3,6 +3,7 @@ import axios from "axios"
 import { useHistory } from "react-router";
 
 import { BASE_URL } from "../constants";
+import { render } from "react-dom";
 
 //import axios
 //create the api object
@@ -31,18 +32,23 @@ async function AddActivity(token, activity){
     }
     await api(options);
     history.push(`/activities/`)
+    
+
+    render(
+        <h1>Hi</h1>
+    )
 
 
-return (
+/*return (
     <div id="addRoutine" className="centered m-3">
         <h2>New Activity</h2>
         <form className="w-50" onSubmit={async (event) => {
             event.preventDefault();
-           /* const activity = {
+           const activity = {
                 name: name,
                 description: description
            
-            } */
+            } 
             //AddActivity(token, activity, history);
          }}> 
     
@@ -69,7 +75,7 @@ return (
     <button type="submit" >Submit</button>       
     </form>
 </div> 
-
-)}
+) */
+}
 
 export default AddActivity

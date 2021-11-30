@@ -23,9 +23,17 @@ async function UpdateActivity ({activities, getActivities, activity, activityId,
         };
         if(token) {
         options.headers = {'Authorization': `Bearer ${token}`};
+
+
     }
     await api(options);
-    history.push(`/activities/activity/${activityId}`)
+    history.push(`/activities/activity/`) //removed ${activityId}
+
+   /* useEffect(() => {
+        if(match.params.routineId){
+            getRoutineWithIDForEdit(token, match.params.routineId, setName, setGoal, setIsPublic);
+        }       
+    },[token,match.params.routineId]) */
 
 
     const handleSubmit = async (event) => {
