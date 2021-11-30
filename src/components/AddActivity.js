@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+/*import React, { useState } from "react";
 import axios from "axios"
 import { useHistory } from "react-router";
 
@@ -34,23 +34,18 @@ async function AddActivity(token, activity){
     history.push(`/activities/`)
     
 
-    render(
-        <h1>Hi</h1>
-    )
-
-
-/*return (
+    return (
     <div id="addRoutine" className="centered m-3">
         <h2>New Activity</h2>
         <form className="w-50" onSubmit={async (event) => {
             event.preventDefault();
-           const activity = {
+            /*const activity = {
                 name: name,
                 description: description
            
-            } 
+            } */
             //AddActivity(token, activity, history);
-         }}> 
+ /*        }}> 
     
     <input
         type="text"
@@ -75,7 +70,7 @@ async function AddActivity(token, activity){
     <button type="submit" >Submit</button>       
     </form>
 </div> 
-) */
+) 
 }
 
-export default AddActivity
+export default AddActivity */

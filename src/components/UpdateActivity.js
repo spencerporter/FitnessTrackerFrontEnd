@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+/*import React, { useState } from "react";
 import axios from "axios"
 import { useHistory } from "react-router";
 import { BASE_URL } from "../constants";
@@ -35,6 +35,7 @@ async function UpdateActivity ({activities, getActivities, activity, activityId,
         }       
     },[token,match.params.routineId]) */
 
+    /*
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -55,7 +56,7 @@ async function UpdateActivity ({activities, getActivities, activity, activityId,
                 setDescription('');
             } */
 
-    }
+ /*   }
 
     return <>
         <h4>Update Activity</h4>
@@ -68,4 +69,4 @@ async function UpdateActivity ({activities, getActivities, activity, activityId,
 
 } 
 
-export default UpdateActivity;
+export default UpdateActivity; */
