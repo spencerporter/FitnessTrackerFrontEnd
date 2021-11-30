@@ -45,7 +45,7 @@ const Routine = ({token, history, match}) => {
                             }
                         </div>
                         <div className="horizGroup">
-                            <form id="addActions" onSubmit = {() => {
+                            <form id="addActions" onSubmit = {(event) => {
                                 const duration = event.target.duration;
                                 const count = event.target.count;
                                 const activityId = event.target.activitySelector;
