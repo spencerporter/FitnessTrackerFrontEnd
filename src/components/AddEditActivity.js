@@ -41,7 +41,7 @@ async function editActivity(token, activity, activityId, history){
     history.push(`/activities/activity/${activityId}`)
 }
 
-const AddUpdateAtivity = ({token, isAdd, match}) => {  //what is isAdd?
+const AddEditActivity = ({token, isAdd, match}) => {  //what is isAdd?
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const history = useHistory();
@@ -102,4 +102,4 @@ const AddUpdateAtivity = ({token, isAdd, match}) => {  //what is isAdd?
     }
 }
 
-export default AddUpdateActivity;
+export default AddEditActivity;
