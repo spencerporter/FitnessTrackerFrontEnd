@@ -1,30 +1,49 @@
-import React, { useState } from "react";
+/*import React, { useState } from "react";
+import axios from "axios"
+import { useHistory } from "react-router";
+import { BASE_URL } from "../constants";
 
-export default function UpdateActivity ({activities, getActivities, avitivityId, token}) {   //headers
+export const api = axios.create({
+    baseURL: `${BASE_URL}`,
+})
+
+async function UpdateActivity ({activities, getActivities, activity, activityId, token}) {  
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
+    const history = useHistory();
 
+    const options = {
+        method: "patch",
+        url: `${BASE_URL}/activities/${activityId}`,
+        data: {
+            name: activity.name,
+            description: activity.description
+           
+        },
+        };
+        if(token) {
+        options.headers = {'Authorization': `Bearer ${token}`};
+
+
+    }
+    await api(options);
+    history.push(`/activities/activity/`) //removed ${activityId}
+
+   /* useEffect(() => {
+        if(match.params.routineId){
+            getRoutineWithIDForEdit(token, match.params.routineId, setName, setGoal, setIsPublic);
+        }       
+    },[token,match.params.routineId]) */
+
+    /*
 
     const handleSubmit = async (event) => {
         event.preventDefault();
      
-        const response = await fetch('http://fitnesstrac-kr.herokuapp.com/api/activities/9', {
-            method: "PATCH",
-            headers: {'Authorization': `Bearer ${token}`},
-            body: JSON.stringify({
-              name: name,
-              description: description,
-              header: header
-            })
-          }).then(response => response.json())
-            .then(result => {
-              console.log(result);
-            })
-            .catch(console.error);
-            
-            const data = await response.json();
+        
+            /*const data = await response.json();
             console.log('data: ', data);
-            if(data && data.title) {
+            if(data && data.name) {
                 const newActivities = activities.map(post => {
                     if(activity.id === activityId) {
                         return data;
@@ -35,9 +54,9 @@ export default function UpdateActivity ({activities, getActivities, avitivityId,
                 getActivities(newActivities);
                 setName('');
                 setDescription('');
-            }
+            } */
 
-    }
+ /*   }
 
     return <>
         <h4>Update Activity</h4>
@@ -49,3 +68,5 @@ export default function UpdateActivity ({activities, getActivities, avitivityId,
         </>
 
 } 
+
+export default UpdateActivity; */

@@ -6,6 +6,9 @@ import React, { useEffect, useState }from "react";
 import { Link , useHistory } from "react-router-dom";
 import { fetchAllActivities, getRoutineWithID } from "../api";
 import { Toast, ToastContainer } from "react-bootstrap";
+import { getActivityWithIDForEdit } from "../api";
+import AddEditActivity from "./AddEditActivity";
+
 
 async function getActivities(setActivities, setDisplayActivities){
     const activities = await fetchAllActivities();
@@ -14,7 +17,7 @@ async function getActivities(setActivities, setDisplayActivities){
 }
 
 
-function ActivityMatches(activity, text, number) {
+function ActivityMatches(activity, text) {
     if(activity.name.toLowerCase().includes(text)) return true;
     if(activity.description.toLowerCase().includes(text)) return true;
 
@@ -25,7 +28,6 @@ function ActivityMatches(activity, text, number) {
 const Activites = ({token}) => {
     const [activities, setActivities] = useState([]);
     const [displayActivities, setDisplayActivities] = useState([]);
-
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
     const history = useHistory();
@@ -49,12 +51,10 @@ const Activites = ({token}) => {
                     </Toast>
                 </ToastContainer>
             : null)}
-            <div className="horizGroup">
+            <div className="horizGroup"> 
                 <form className="d-flex w-75">
                     <input className="form-control me-2" type="search" placeholder="Search Activities" aria-label="Search"
                     onChange={({target : {value}}) => {
-                        // TODO FIx Search
-                        
                         const filteredActivities = activities.filter(activity => ActivityMatches(activity, value.toLowerCase()));
                         const activitiesToDisplay = value.length ? filteredActivities : activities;
                         setDisplayActivities(activitiesToDisplay)
@@ -71,6 +71,21 @@ const Activites = ({token}) => {
                         <ul className="list-group list-group-flush">
                             <li className="list-group-item">Description: {activity.description}</li>
                         </ul>
+                        <button
+                        type="button"
+                        className="btn btn-outline-primary"
+                        onClick={(token, activity, activityId, history) => {
+                          
+                           const selectedActivity = getActivityWithIDForEdit(activities, activityId)
+                           AddEditActivity(selectedActivity)
+                           history.push("/activities/" + activity.id) 
+
+
+                            /*const selectedActivity = findPost(post._id, posts)
+                            history.push("/activities/" + activity.id) */
+                        }}                                 
+                        >Edit Activity
+                        </button>
                     </div>
                 )
             })}

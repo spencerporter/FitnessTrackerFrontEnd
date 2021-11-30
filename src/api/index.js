@@ -157,6 +157,33 @@ export async function fetchAllActivities(){
     }
 }
 
+export async function getActivityWithID(activityId, ){
+    try{
+        const activities = await fetchAllActivities();
+        for(var i = 0; i < activities.length; i++){
+            if(activities[i].id.toString() === activityId){
+                return activities[i];
+            }
+        }
+        return {};
+    }catch (error){
+        console.error("Isssue Fetching Users Routines", error)
+    }
+}
+
+export async function getActivityWithIDForEdit(token, activity, activityId, setName, setDescription){
+    try{
+        const routine = await getActivityWithID(activityId)
+        if(activity){
+            setName(activity.name);
+            setDescription(activity.description);
+
+        }
+    }catch (error){
+        console.error("Isssue Fetching Users Routines", error)
+    }
+}
+
 /**
  * User Functions
  */

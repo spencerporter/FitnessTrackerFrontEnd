@@ -5,10 +5,12 @@ import { getUser } from './api';
 
 import {
     AddEditRoutines,
+    AddEditActivity,
     Home,
     LogIn,
     NavBar, Routines, MyRoutines, Routine, Activities
 } from "./components"
+
 const App = () => {
     const [token, setToken] = useState("");
     const [user, setUser] = useState({
@@ -31,6 +33,9 @@ const App = () => {
                 <Route exact path="/routines" render={() => <Routines token={token} user={user} />}/>
                 <Route exact path="/activities" render={() => <Activities token={token} user={user} />}/>
                 <Route exact path="/routines/add" render={(routeProps) => <AddEditRoutines token={token} user={user} isAdd={true} {...routeProps}/>}  />
+                <Route exact path="/activities/add" render={(routeProps) => <AddEditActivity token={token} user={user} isAdd={true} {...routeProps}/>}  />
+                <Route path="/activities/activity/:activityId" render={(routeProps) => <AddEditActivity token={token} user={user} {...routeProps} />}/>
+                <Route path="/activities/activity/edit/:activityId" render={(routeProps) => <AddEditActivity token={token} user={user} isAdd={false} {...routeProps}/>}  />
                 <Route path="/routines/routine/:routineId" render={(routeProps) => <Routine token={token} user={user} {...routeProps} />}/>
                 <Route path="/routines/routine/edit/:routineId" render={(routeProps) => <AddEditRoutines token={token} user={user} isAdd={false} {...routeProps}/>}  />
                 <Route path="/myRoutines" render={(routeProps) => <MyRoutines token={token} {...routeProps} />} />
