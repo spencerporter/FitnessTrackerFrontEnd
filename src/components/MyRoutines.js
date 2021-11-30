@@ -91,6 +91,8 @@ const MyRoutines = ({token, history}) => {
                                     return (
                                         <div key={index}>
                                         <li className="list-group-item">{activity.name}: {activity.description} </li>
+                                        <li className="list-group-item">Duration: {activity.duration} </li>
+                                        <li className="list-group-item">Count: {activity.count} </li>
                                         </div>
                                     )
                                 })}

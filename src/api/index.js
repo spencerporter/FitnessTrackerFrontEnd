@@ -2,7 +2,11 @@
  * API Calls
  */
 import { BASE_URL } from "../constants";
+import axios from "axios"
 
+export const api = axios.create({
+    baseURL: `${BASE_URL}`,
+})
 
 /**
  * Routines Functions
@@ -38,15 +42,28 @@ export async function fetchRoutinesByUsername(username){
     }
 }
 
-export async function getRoutineWithID(token, routineId, setRoutine){
+export async function getRoutineWithID(routineId){
     try{
         const routines = await fetchAllRoutines();
         for(var i = 0; i < routines.length; i++){
-            if(routines[i].id === routineId){
+            if(routines[i].id.toString() === routineId.toString()){
                 return routines[i];
             }
         }
         return {};
+    }catch (error){
+        console.error("Isssue Fetching Users Routines", error)
+    }
+}
+
+export async function getRoutineWithIDForSingleView(routineId, setRoutine){
+    try{
+        const routines = await fetchAllRoutines();
+        for(var i = 0; i < routines.length; i++){
+            if(routines[i].id.toString() === routineId.toString()){
+                setRoutine(routines[i])
+            }
+        }
     }catch (error){
         console.error("Isssue Fetching Users Routines", error)
     }
@@ -82,20 +99,22 @@ export async function getRoutineWithIDForEdit(token, routineId, setName, setGoal
         console.error("Isssue Fetching Users Routines", error)
     }
 }
-export async function addActivityToRoutine(routineId, activityId, count, duration){
+export async function addActivityToRoutine(token, routineId, activityId, count, duration){
     try{
-        
-        const response = await fetch(`${BASE_URL}/routines/${routineId}/activities`, {
-            method: "POST",
-            body: JSON.stringify({
+        const options = {
+            method: "post",
+            url: `${BASE_URL}/routines/${routineId}/activities`,
+            data: {
                 activityId: activityId,
                 count: count,
                 duration: duration
-            })
-        })
-        const result = await response.json();
-        const attachedActivity = result;
-        return attachedActivity;
+            },
+        };
+        if(token) {
+            options.headers = {'Authorization': `Bearer ${token}`};
+        }
+
+        await api(options);
     } catch (error) {
         console.error("Error adding Activity to Routine", error);
     }
@@ -103,16 +122,19 @@ export async function addActivityToRoutine(routineId, activityId, count, duratio
 
 export async function deleteActivityFromRoutine(token, routineActivityId) {
     try{
-        const response = await fetch(`${BASE_URL}/routine_activities/${routineActivityId}`, {
-            method: "DELETE",
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+        try{
+            const options = {
+                method: "delete",
+                url: `${BASE_URL}/routine_activities/${routineActivityId}`,
+            };
+            if(token) {
+                options.headers = {'Authorization': `Bearer ${token}`};
             }
-        })
-        const result = await response.json();
-        const deletedActivity = result;
-        return deletedActivity;
+    
+            await api(options);
+        } catch (error) {
+            console.error("Error adding Activity to Routine", error);
+        }
     } catch (error) {
         console.error("Error deleting Activity", error);
     }
@@ -126,7 +148,10 @@ export async function fetchAllActivities(){
         const response = await fetch(`${BASE_URL}/activities`)
         const result = await response.json();
         const activities = result;
-        return activities;
+        if(activities){
+            return activities;    
+        }
+        return [];
     } catch (error) {
         console.error("Error Retriving Activities", error);
     }
