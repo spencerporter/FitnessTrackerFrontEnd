@@ -6,6 +6,7 @@ import { getUser } from './api';
 import {
     AddEditRoutines,
     AddActivity,
+    UpdateActivity,
     Home,
     LogIn,
     NavBar, Routines, MyRoutines, Routine, Activities

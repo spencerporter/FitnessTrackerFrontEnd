@@ -7,7 +7,7 @@ export const api = axios.create({
     baseURL: `${BASE_URL}`,
 })
 
-async function UpdateActivity ({activities, getActivities, activityId, token}) {  
+async function UpdateActivity ({activities, getActivities, activity, activityId, token}) {  
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const history = useHistory();
@@ -32,9 +32,9 @@ async function UpdateActivity ({activities, getActivities, activityId, token}) {
         event.preventDefault();
      
         
-            const data = await response.json();
+            /*const data = await response.json();
             console.log('data: ', data);
-            if(data && data.title) {
+            if(data && data.name) {
                 const newActivities = activities.map(post => {
                     if(activity.id === activityId) {
                         return data;
@@ -45,7 +45,7 @@ async function UpdateActivity ({activities, getActivities, activityId, token}) {
                 getActivities(newActivities);
                 setName('');
                 setDescription('');
-            }
+            } */
 
     }
 

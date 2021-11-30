@@ -4,12 +4,10 @@ import { useHistory } from "react-router";
 
 import { BASE_URL } from "../constants";
 
-
 //import axios
 //create the api object
 //create the options object
 //call the api object with the ioptions object as paramater
-
 
 export const api = axios.create({ 
     baseURL: `${BASE_URL}`,
