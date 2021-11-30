@@ -7,7 +7,8 @@ import { Link , useHistory } from "react-router-dom";
 import { fetchAllActivities, getRoutineWithID } from "../api";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { getActivityWithIDForEdit } from "../api";
-//import { AddEditActivity } from "./components"
+import AddEditActivity from "./AddEditActivity";
+
 
 async function getActivities(setActivities, setDisplayActivities){
     const activities = await fetchAllActivities();
@@ -27,7 +28,6 @@ function ActivityMatches(activity, text) {
 const Activites = ({token}) => {
     const [activities, setActivities] = useState([]);
     const [displayActivities, setDisplayActivities] = useState([]);
-
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
 
     const history = useHistory();
@@ -76,10 +76,12 @@ const Activites = ({token}) => {
                         className="btn btn-outline-primary"
                         onClick={(token, activity, activityId, history) => {
                           
-                           const selectedActicity = getActivityWithIDForEdit(activities, activityId)
+                           const selectedActivity = getActivityWithIDForEdit(activities, activityId)
+                           AddEditActivity(selectedActivity)
+                           history.push("/activities/" + activity.id) 
+
 
                             /*const selectedActivity = findPost(post._id, posts)
-                            setSelectedPost(newSelectedPost)
                             history.push("/activities/" + activity.id) */
                         }}                                 
                         >Edit Activity
