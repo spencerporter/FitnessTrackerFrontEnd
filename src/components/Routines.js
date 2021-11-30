@@ -106,7 +106,6 @@ const Routines = ({token}) => {
                                     <div className="horizGroup">
                                     <button type="button" className="btn btn-outline-danger w-25 m-3" onClick={() => {
                                         deleteRoutine(routine.id, token, setRoutines, setDisplayRoutines, setShowDeleteAlert)
-                                        console.log("woo")
                                     }}>Delete</button>
                                     </div> :
                                     null

@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { getRoutineWithID, deleteRoutineWithID } from "../api";
+import { getRoutineWithID, deleteRoutineWithID, fetchAllActivities, addActivityToRoutine } from "../api";
 
 async function deleteRoutine(routineID, token, history){
     await deleteRoutineWithID(token, routineID)
     history.push("/routines");
 }
 
+
+
 const Routine = ({token, history, match}) => {
     const [routine, setRoutine] = useState({})
-    
+    const [activities, setActivities] = useState({})
+
+    useEffect(() => {
+        fetchAllActivities(activities, setActivities);
+    }, []);
+
     useEffect(() => {
         getRoutineWithID(token, match.params.routineId, setRoutine);
     },[token,match.params.routineId])
@@ -32,6 +39,34 @@ const Routine = ({token, history, match}) => {
                                     history.push(`/routines/routine/edit/${routine._id}`);
                                 }}>Edit Routine</button>
                             <button type="button" className="btn btn-outline-danger w-25 m-3" onClick={() => {deleteRoutine(routine._id,token, history)}}>Delete</button>
+                            {//create form
+                            //input for count
+                            //input for duration
+                            }
+                        </div>
+                        <div className="horizGroup">
+                            <form id="addActions" onSubmit = {() => {
+                                const duration = event.target.duration;
+                                const count = event.target.count;
+                                const activityId = event.target.activitySelector;
+                                addActivityToRoutine(routine.id, activityId, count, duration);
+                            }}>
+                                <label for="duration">Duration:</label>
+                                <input type="text" name="duration"></input>
+                                <label for="count">Count:</label>
+                                <input type="text" name="count"></input>
+                                <input type="submit" value="Add Activity"></input>
+                            </form>
+                            <select name="activitySelector" form="addActions">
+                                {activities.map((activity, index) => {
+                                    return(
+                                        <div key={index}>
+                                        <option value={activity.id}>{activity.name}</option>
+                                        </div>
+                                    )
+                                })
+                                }
+                            </select>
                         </div>
                     </ul>
                 </div>
