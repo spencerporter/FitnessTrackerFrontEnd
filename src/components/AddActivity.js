@@ -15,7 +15,7 @@ export const api = axios.create({
     baseURL: `${BASE_URL}`,
 })
 
-async function AddActivity(token, activity, /*history*/){
+async function AddActivity(token, activity){
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const history = useHistory();
@@ -40,11 +40,11 @@ return (
         <h2>New Activity</h2>
         <form className="w-50" onSubmit={async (event) => {
             event.preventDefault();
-            /*const activity = {
+           /* const activity = {
                 name: name,
-                goal: goal
+                description: description
            
-            }*/
+            } */
             //AddActivity(token, activity, history);
          }}> 
     

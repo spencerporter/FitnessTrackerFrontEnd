@@ -13,10 +13,10 @@ export default function UpdateActivity ({activities, getActivities, activityId, 
 
     const options = {
         method: "patch",
-        url: `${BASE_URL}/routines/${routineId}`,
+        url: `${BASE_URL}/activities/${activityId}`,
         data: {
             name: activity.name,
-            description: activity.description,
+            description: activity.description
            
         },
         };
@@ -24,7 +24,7 @@ export default function UpdateActivity ({activities, getActivities, activityId, 
         options.headers = {'Authorization': `Bearer ${token}`};
     }
     await api(options);
-    history.push(`/routines/routine/${routineId}`)
+    history.push(`/activities/activity/${activityId}`)
 
 
     const handleSubmit = async (event) => {

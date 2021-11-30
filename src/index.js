@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter , Route } from 'react-router-dom';
 import { getUser } from './api';
 
-//import { AddActivity } from './components/AddActivity';
-
-//import {default as AddActivity} from "./AddActivity";
-
 import {
     AddEditRoutines,
     AddActivity,
