@@ -49,7 +49,7 @@ const Activites = ({token}) => {
                     </Toast>
                 </ToastContainer>
             : null)}
-            <div className="horizGroup">
+            <div className="horizGroup"> 
                 <form className="d-flex w-75">
                     <input className="form-control me-2" type="search" placeholder="Search Activities" aria-label="Search"
                     onChange={({target : {value}}) => {
@@ -69,6 +69,17 @@ const Activites = ({token}) => {
                         <ul className="list-group list-group-flush">
                             <li className="list-group-item">Description: {activity.description}</li>
                         </ul>
+                        <button
+                        type="button"
+                        className="btn btn-outline-primary"
+                        onClick={() => {
+
+                            /*const selectedActivity = findPost(post._id, posts)
+                            setSelectedPost(newSelectedPost)
+                            history.push("/activities/" + activity.id) */
+                        }}                                 
+                        >Edit Activity
+                        </button>
                     </div>
                 )
             })}
