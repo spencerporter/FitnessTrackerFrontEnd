@@ -6,6 +6,8 @@ import React, { useEffect, useState }from "react";
 import { Link , useHistory } from "react-router-dom";
 import { fetchAllActivities, getRoutineWithID } from "../api";
 import { Toast, ToastContainer } from "react-bootstrap";
+import { getActivityWithIDForEdit } from "../api";
+//import { AddEditActivity } from "./components"
 
 async function getActivities(setActivities, setDisplayActivities){
     const activities = await fetchAllActivities();
@@ -72,7 +74,9 @@ const Activites = ({token}) => {
                         <button
                         type="button"
                         className="btn btn-outline-primary"
-                        onClick={() => {
+                        onClick={(token, activity, activityId, history) => {
+                          
+                           const selectedActicity = getActivityWithIDForEdit(activities, activityId)
 
                             /*const selectedActivity = findPost(post._id, posts)
                             setSelectedPost(newSelectedPost)
