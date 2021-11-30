@@ -7,7 +7,7 @@ export const api = axios.create({
     baseURL: `${BASE_URL}`,
 })
 
-export default function UpdateActivity ({activities, getActivities, activityId, token}) {  
+async function UpdateActivity ({activities, getActivities, activityId, token}) {  
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
 
@@ -58,3 +58,5 @@ export default function UpdateActivity ({activities, getActivities, activityId, 
         </>
 
 } 
+
+export default UpdateActivity;
