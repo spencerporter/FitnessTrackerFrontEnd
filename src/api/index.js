@@ -99,7 +99,7 @@ export async function getRoutineWithIDForEdit(token, routineId, setName, setGoal
         console.error("Isssue Fetching Users Routines", error)
     }
 }
-export async function addActivityToRoutine(token, routineId, activityId, count, duration){
+export async function addActivityToRoutine(token, routineId, activityId, count, duration, setRoutine){
     try{
         const options = {
             method: "post",
@@ -115,12 +115,15 @@ export async function addActivityToRoutine(token, routineId, activityId, count, 
         }
 
         await api(options);
+
+        const newRoutine = await getRoutineWithID(routineId);
+        setRoutine(newRoutine)
     } catch (error) {
         console.error("Error adding Activity to Routine", error);
     }
 }
 
-export async function deleteActivityFromRoutine(token, routineActivityId) {
+export async function deleteActivityFromRoutine(token, routineId, routineActivityId, setRoutine) {
     try{
         try{
             const options = {
@@ -132,6 +135,9 @@ export async function deleteActivityFromRoutine(token, routineActivityId) {
             }
     
             await api(options);
+
+            const newRoutine = await getRoutineWithID(routineId);
+            setRoutine(newRoutine);
         } catch (error) {
             console.error("Error adding Activity to Routine", error);
         }

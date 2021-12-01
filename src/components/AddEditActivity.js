@@ -8,37 +8,45 @@ export const api = axios.create({
     baseURL: `${BASE_URL}`,
 })
 
-async function addActivity(token, activity, history){
-    const options = {
-        method: "post",
-        url: `${BASE_URL}/activities`,
-        data: {
-            name: activity.name,
-            description: activity.description
-            
-        },
-        };
-        if(token) {
-        options.headers = {'Authorization': `Bearer ${token}`};
+async function addActivity(token, activity, history, setErrorDialog){
+    try{
+        const options = {
+            method: "post",
+            url: `${BASE_URL}/activities`,
+            data: {
+                name: activity.name,
+                description: activity.description
+                
+            },
+            };
+            if(token) {
+            options.headers = {'Authorization': `Bearer ${token}`};
+        }
+        await api(options);
+        history.push(`/activities/`)
+    } catch {
+        setErrorDialog("An Activity with that Name Already Exists")
     }
-    await api(options);
-    history.push(`/activities/`)
 }
 
-async function editActivity(token, activity, activityId, history){
-    const options = {
-        method: "patch",
-        url: `${BASE_URL}/activities/${activityId}`,
-        data: {
-            name: activity.name,
-            description: activity.description
-        },
-        };
-        if(token) {
-        options.headers = {'Authorization': `Bearer ${token}`};
-    }
-    await api(options);
-    history.push(`/activities/`)
+async function editActivity(token, activity, activityId, history, setErrorDialog){
+    try{
+        const options = {
+            method: "patch",
+            url: `${BASE_URL}/activities/${activityId}`,
+            data: {
+                name: activity.name,
+                description: activity.description
+            },
+            };
+            if(token) {
+            options.headers = {'Authorization': `Bearer ${token}`};
+        }
+        await api(options);
+        history.push(`/activities/`)
+    } catch {
+        setErrorDialog("Could not update your Activity")
+    }   
 }
 
 const AddEditActivity = ({token, isAdd, match, activity}) => {  //what is isAdd?
@@ -46,6 +54,7 @@ const AddEditActivity = ({token, isAdd, match, activity}) => {  //what is isAdd?
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const history = useHistory();
+    const [errorDialog, setErrorDialog] = useState("");
     
     useEffect(() => {
         if(token){
@@ -72,12 +81,15 @@ const AddEditActivity = ({token, isAdd, match, activity}) => {  //what is isAdd?
                        
                     }
                     if(isAdd){
-                        addActivity(token, activity, history);
+                        addActivity(token, activity, history, setErrorDialog);
                     }else{
-                        editActivity(token, activity, match.params.activityId, history);
+                        editActivity(token, activity, match.params.activityId, history, setErrorDialog);
                     }
                     
                 }}> 
+                    <div className="mb-3 errorMessage">
+                        {errorDialog}
+                    </div>
                     <div className="mb-3">
                         <label htmlFor="nameInput" className="form-label">Name</label>
                         <input type="text" className="form-control" id="nameInput" placeholder="Name" value={name}

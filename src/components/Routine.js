@@ -20,6 +20,7 @@ const Routine = ({token, history, match, user}) => {
     const [routine, setRoutine] = useState({})
     const [activities, setActivities] = useState({})
     var isCreator = false;
+
     useEffect(() => {
         getAllActivities(setActivities);
     }, []);
@@ -29,11 +30,11 @@ const Routine = ({token, history, match, user}) => {
             getRoutineWithIDForSingleView(routineId, setRoutine);
         }
     },[routineId])
+
     if(user){
         isCreator = (user.username === routine.creatorName)
     }
-    console.log("Loaded with User", user, isCreator)
-
+    console.log("New Page")
     if(routine.id){
         return (
             <div className="centered">
@@ -54,7 +55,7 @@ const Routine = ({token, history, match, user}) => {
                                 null  
                             }
                             { isCreator?
-                                <button type="button" className="btn btn-outline-danger w-25 m-3" onClick={() => {deleteRoutine(routine.id,token, history)}}>Delete</button>
+                                <button type="button" className="btn btn-outline-danger w-25 m-3" onClick={() => {deleteRoutine(routine.id,token)}}>Delete</button>
                                 :
                                 null  
                             }
@@ -66,7 +67,7 @@ const Routine = ({token, history, match, user}) => {
                                         <li className="list-group-item">Count: {activity.count} </li>
                                         { isCreator?
                                             <button type="button" className="btn btn-outline-danger w-25 m-3" onClick={() => 
-                                                {deleteActivityFromRoutine(token, activity.routineActivityId)}}>Remove Activity</button>
+                                                {deleteActivityFromRoutine(token, routine.id, activity.routineActivityId, setRoutine)}}>Remove Activity</button>
                                             :
                                           null  
                                         }
@@ -88,7 +89,7 @@ const Routine = ({token, history, match, user}) => {
                                 const duration = event.target.duration.value;
                                 const count = event.target.count.value;
                                 const activityId = event.target.activitySelector.value;
-                                addActivityToRoutine(token,routine.id, activityId, count, duration);
+                                addActivityToRoutine(token,routine.id, activityId, count, duration, setRoutine);
                             }}>
                                 <label htmlFor="duration" className="form-label">Duration:</label>
                                 <input type="text" name="duration" className="form-control"></input>

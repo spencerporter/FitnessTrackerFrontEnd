@@ -90,7 +90,7 @@ const AddEditRoutine = ({token, isAdd, match}) => {
                     }
                     
                 }}> 
-                    <div className="mb-3">
+                    <div className="mb-3 errorMessage">
                         {errorDialog}
                     </div>
                     <div className="mb-3">
